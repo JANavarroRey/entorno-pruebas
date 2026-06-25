@@ -1,5 +1,5 @@
-import iconoDarkSrc from '../../../../Contexto/Identidad digital/Logo/LOGO DEFINITIVO/icono_negro.png';
-import iconoLightSrc from '../../../../Contexto/Identidad digital/Logo/LOGO DEFINITIVO/icono_blanco.png';
+import iconoDarkSrc from '../../assets/logo/icono_negro.png';
+import iconoLightSrc from '../../assets/logo/icono_blanco.png';
 
 export function initHeader() {
   const header = document.querySelector('.site-header');

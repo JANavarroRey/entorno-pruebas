@@ -1,4 +1,4 @@
-import logoSrc from '../../../../Contexto/Identidad digital/Logo/LOGO DEFINITIVO/logo blanco new.png';
+import logoSrc from '../../assets/logo/logo_blanco_new.png';
 
 export function renderFooter() {
   return `

@@ -383,7 +383,7 @@
         <div class="blog-controls-container">
           <div class="search-wrapper">
             <span class="material-symbols-outlined">search</span>
-            <input type="text" id="blog-search" placeholder="Buscar artículos...">
+            <input type="text" id="blog-search" placeholder="Buscar artículos..." onfocus="setTimeout(() => this.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300)">
           </div>
           <div class="filter-wrapper">
             <div class="custom-dropdown" id="custom-sort-dropdown">

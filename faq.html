@@ -18,15 +18,29 @@
   
   <style>
     .faq-layout {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
       padding: var(--space-2xl) var(--space-md) var(--space-5xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
     }
     
     .faq-item {
-      border-bottom: 1px solid var(--color-gold);
-      padding: var(--space-xl) 0;
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      padding: 0;
       transition: all var(--duration-normal) var(--ease-smooth);
+      border: 1px solid rgba(0,0,0,0.02);
+      border-left: 4px solid transparent;
+      overflow: hidden;
+    }
+    
+    .faq-item:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+      border-left-color: var(--color-gold);
     }
     
     .faq-question {
@@ -34,10 +48,11 @@
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      font-family: var(--font-body);
-      font-size: 1.15rem;
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
       font-weight: 500;
       color: var(--color-ink);
+      padding: var(--space-xl) var(--space-2xl);
       transition: color var(--duration-fast) var(--ease-smooth);
     }
     
@@ -48,40 +63,71 @@
     .faq-icon {
       font-size: 1.5rem;
       color: var(--color-gold);
-      transition: transform var(--duration-normal) var(--ease-back);
-      background: transparent;
+      transition: all var(--duration-normal) var(--ease-smooth);
+      background: var(--surface-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     
     .faq-question:hover .faq-icon {
-      transform: translateY(2px);
+      background: var(--color-gold);
+      color: white;
     }
     
     .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
+      transition: max-height 0.5s var(--ease-smooth), opacity 0.4s var(--ease-smooth);
       opacity: 0;
       color: var(--text-secondary);
+      font-family: var(--font-body);
       font-size: 1.1rem;
-      line-height: 1.6;
+      line-height: 1.7;
+      background-color: var(--surface-light);
     }
     
     .faq-answer-inner {
-      padding-top: var(--space-lg);
-      padding-bottom: var(--space-sm);
-      padding-right: var(--space-3xl);
+      padding: var(--space-lg) var(--space-2xl) var(--space-2xl);
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .faq-title {
+      color: var(--text-primary);
+      font-size: 3.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .faq-layout {
+        padding: var(--space-xl) var(--space-sm) var(--space-3xl);
+      }
+      .faq-question {
+        padding: var(--space-md) var(--space-lg);
+        font-size: 1.1rem;
+      }
+      .faq-answer-inner {
+        padding: var(--space-md) var(--space-lg) var(--space-lg);
+      }
+      .faq-title {
+        font-size: 2.2rem;
+      }
     }
     
     /* Active state handled by JS */
+    .faq-item.active {
+      border-left-color: var(--color-burgundy);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
     .faq-item.active .faq-question {
       color: var(--color-burgundy);
     }
     .faq-item.active .faq-icon {
       transform: rotate(180deg);
-      color: var(--color-burgundy);
+      background: var(--color-burgundy);
+      color: white;
     }
     .faq-item.active .faq-answer {
       max-height: 500px;
@@ -94,15 +140,13 @@
   <div id="header-placeholder"></div>
 
   <main>
-    <section class="hero-section hero-center" style="min-height: 40vh; padding-top: calc(var(--space-5xl) + 80px); padding-bottom: var(--space-2xl); background-color: var(--surface-light); color: var(--color-ink);">
-      <div class="container" data-reveal="fade-up">
-        <h1 class="hero-title" style="color: var(--text-primary);">Preguntas Frecuentes</h1>
-        <p class="hero-desc" style="color: var(--text-secondary);">Todo lo que necesitas saber sobre nuestros Murcianitos.</p>
-      </div>
-    </section>
-
-    <section class="section">
+    <section class="section" style="padding-top: calc(var(--space-5xl) + 80px); background-color: var(--surface-light); min-height: 80vh;">
       <div class="container faq-layout" data-reveal="stagger">
+        
+        <div style="margin-bottom: var(--space-2xl); text-align: center;" data-reveal="fade-up">
+          <h1 class="hero-title faq-title">Preguntas Frecuentes</h1>
+          <p class="hero-desc" style="color: var(--text-secondary); font-size: 1.2rem; margin-top: 10px;">Todo lo que necesitas saber sobre nuestros Murcianitos.</p>
+        </div>
         
         <div class="faq-item stagger-item">
           <div class="faq-question">
@@ -204,7 +248,7 @@
       
       <div class="container" style="text-align: center; margin-top: var(--space-xl); margin-bottom: var(--space-4xl);" data-reveal="fade-up">
         <p style="margin-bottom: var(--space-md); font-family: var(--font-headline); font-size: 1.5rem; color: var(--color-ink);">¿No encuentras lo que buscas?</p>
-        <a href="/contacto.html" class="btn btn-secondary">Contacta con nosotros</a>
+        <a href="./contacto.html" class="btn btn-gold">Contacta con nosotros</a>
       </div>
     </section>
 

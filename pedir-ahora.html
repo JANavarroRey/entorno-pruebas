@@ -46,7 +46,6 @@
       background-color: #FFFFFF;
       padding: var(--space-xl) var(--space-md);
       border-radius: var(--radius-lg);
-      border: 1px solid rgba(197, 160, 89, 0.2);
       text-align: center;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       cursor: pointer;
@@ -415,6 +414,98 @@
     .payment-method-btn:hover:not(.selected) {
       border-color: rgba(0,0,0,0.25);
       background: var(--surface-light);
+    }
+    
+    /* Terms Modal CSS */
+    .terms-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .terms-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .terms-modal {
+      background: var(--surface-light);
+      width: 90%;
+      max-width: 800px;
+      max-height: 85vh;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+    }
+    .terms-modal-overlay.active .terms-modal {
+      transform: translateY(0);
+    }
+    .terms-modal-header {
+      padding: var(--space-md) var(--space-xl);
+      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FFFFFF;
+    }
+    .terms-modal-header h3 {
+      font-family: var(--font-headline);
+      color: var(--color-ink);
+      font-size: 1.25rem;
+      margin: 0;
+    }
+    .terms-modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xs);
+      border-radius: 50%;
+      transition: background-color 0.2s ease;
+    }
+    .terms-modal-close:hover {
+      background-color: rgba(197, 160, 89, 0.1);
+    }
+    .terms-modal-body {
+      padding: var(--space-xl);
+      overflow-y: auto;
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      text-align: left;
+    }
+    .terms-modal-body h4 {
+      color: var(--color-ink);
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-sm);
+      font-family: var(--font-headline);
+      font-size: 1.1rem;
+    }
+    .terms-modal-body p, .terms-modal-body ul {
+      margin-bottom: var(--space-md);
+      font-size: 0.95rem;
+    }
+    .terms-modal-body ul {
+      padding-left: var(--space-lg);
+    }
+    .terms-modal-body ul li {
+      margin-bottom: var(--space-xs);
     }
   </style>
 </head>
@@ -962,7 +1053,7 @@
           <!-- Términos -->
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: var(--space-xl);">
             <input type="checkbox" id="terms" style="width: 20px; height: 20px; accent-color: var(--color-burgundy); cursor: pointer;">
-            <label for="terms" style="font-size: 0.95rem; cursor: pointer;">Aceptar <a href="#" style="color: var(--color-ink); text-decoration: underline;">Términos y Condiciones</a></label>
+            <label for="terms" style="font-size: 0.95rem; cursor: pointer;">Aceptar <a href="#" id="openTermsModal" style="color: var(--color-ink); text-decoration: underline;">Términos y Condiciones</a></label>
           </div>
           </div>
         </div>
@@ -981,6 +1072,104 @@
   </main>
 
   <div id="footer-placeholder"></div>
+
+  <!-- Terms Modal -->
+  <div id="termsOverlay" class="terms-modal-overlay">
+    <div class="terms-modal">
+      <div class="terms-modal-header">
+        <h3>Términos y Condiciones</h3>
+        <button id="closeTermsBtn" class="terms-modal-close" aria-label="Cerrar">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="terms-modal-body">
+        <h4>CONDICIONES GENERALES</h4>
+        
+        <h4>1. Objeto y generalidades</h4>
+        <p>Las presentes Condiciones Generales (en adelante, las "Condiciones Generales") regulan las condiciones de compra de productos a través del sitio web www.murcianitos.es (en adelante, el “Sitio Web” o el “Portal”), titularidad de la sociedad MURCIANITOS S.L., (en adelante, “MURCIANITOS”), con N.I.F. B-87965604, inscrita en el Registro Mercantil, cuyo domicilio social se encuentra en Murcia.</p>
+        <p>La adquisición de cualquiera de los productos del Sitio Web supone la aceptación por parte del usuario (en adelante, “Usuario”), sin reservas de ninguna clase, de todas y cada una de las presentes Condiciones Generales.</p>
+        <p>La aceptación de las presentes Condiciones Generales así como el uso por parte del Usuario del Sitio Web supone el tratamiento de datos personales que se regirá de conformidad con lo previsto en la Política de Privacidad que el Usuario declara expresamente conocer.</p>
+        <p>Mediante la aceptación de las Condiciones Generales, el Usuario garantiza:</p>
+        <ul>
+          <li>Que es una persona con capacidad para contratar.</li>
+          <li>Que ha leído, comprende y acepta las presentes Condiciones Generales.</li>
+        </ul>
+        <p>MURCIANITOS proporciona información acerca de productos propios y de entidades adheridas a la cadena de franquicias (en adelante, “Afiliados”) titulares de las tiendas “Murcianitos” a través de las cuales dichos Afiliados suministran productos “Murcianitos” (en adelante, los “Productos”) en tienda física y a domicilio a demanda del Usuario.</p>
+        <p>Las personas que pretendan adquirir productos deben completar el formulario de registro durante el proceso de compra y seguir los pasos que MURCIANITOS posteriormente comunica a través del Sitio Web. Las presentes Condiciones Generales, junto con el Aviso Legal del Sitio Web y la Política de Privacidad, son las únicas condiciones aplicables al uso del Sitio Web y a la contratación de los Productos y sustituyen a cualesquiera otras condiciones, salvo previo acuerdo y por escrito entre MURCIANITOS y el Usuario. En consecuencia, el Usuario que acceda al Sitio Web y realice la contratación de productos a través del Sitio Web acepta someterse y queda vinculado por las Condiciones Generales, el Aviso Legal y la Política de Privacidad tal y como se hallen redactadas en el momento en que se acceda al Sitio Web.</p>
+        <p>El Usuario tendrá acceso siempre y en todo caso, con carácter previo al inicio del procedimiento de contratación, a las presentes Condiciones Generales, pudiendo ser almacenadas y/o reproducidas en un soporte duradero.</p>
+
+        <h4>2. Información sobre los Productos</h4>
+        <p>Las fotografías, representaciones gráficas o iconográficas y vídeos relativos a los Productos así como nombres comerciales, marcas o signos distintivos de cualquier clase contenidos en el Sitio Web, tienen por objeto aportar la mayor información posible sobre los mismos, no obstante, el Usuario ha de tener en cuenta que tienen un propósito orientativo y, en consecuencia, carecen de carácter exhaustivo.</p>
+        <p>Todos los Productos que están disponibles en el Sitio Web aparecen en pantalla y van acompañados de una descripción sobre sus características y su precio, así como de otra información de interés. En caso de no tener unidades disponibles de algún Producto se indicará expresamente.</p>
+        <p>En el caso en que, por circunstancias de fuerza mayor, un Producto no esté disponible después de haberse realizado la compra, MURCIANITOS informará al Usuario por correo electrónico de la anulación total o, en su caso, parcial del pedido. La anulación parcial del pedido no da derecho a la anulación de la totalidad del pedido.</p>
+        <p>Todos los Productos que se venden en el Sitio Web han sido elaborados siguiendo unos estrictos controles de calidad y cumplen todas las normas aplicables de la Unión Europea.</p>
+
+        <h4>3. Sistema de compra de los productos</h4>
+        <p>Para proceder a la compra del Producto, el Usuario deberá seleccionar la opción que desee, recogida en tienda o pedido a domicilio, y verificar su dirección de entrega. Una vez seleccionada la modalidad de pedido, se desplegará una lista donde, dependiendo del domicilio que haya seleccionado el Usuario, se le asignará la tienda Murcianitos más cercana, que podrá encontrarse gestionada por MURCIANITOS o por uno de sus Afiliados.</p>
+        <p>Si el localizador no reconoce la dirección de entrega puede deberse a que MURCIANITOS o sus Afiliados no repartan a esa zona o bien a que se deba a un error en la grabación de la calle o portal indicados. Recomendamos al Usuario que contacte con el departamento de atención al cliente de MURCIANITOS o con la tienda Murcianitos más cercana.</p>
+        <p>Posteriormente, el Usuario deberá seleccionar el Producto que desea comprar y añadirlo a su carrito pinchando en el icono denominado “Añadir a la Cesta”. Una vez completada la selección de Productos objeto de compra, el Usuario deberá pulsar en el icono de compra donde se desplegará un resumen del pedido y, acto seguido, pinchar en “Finalizar”.</p>
+        <p>A continuación, se solicitará al Usuario que proceda incluir los datos de envío del pedido y también, si así lo desea, a registrarse. Para ambas acciones deberá cumplimentar los datos personales que aparezcan en pantalla, aceptando la Política de Privacidad y las presentes Condiciones Generales, siendo necesario pulsar el icono “Realizar Pedido” para finalizar con la compra.</p>
+        <p>El Usuario deberá disponer de una dirección de correo electrónico válida para poder realizar un pedido. Asimismo, el Usuario deberá comprobar que el correo electrónico facilitado se encuentre activo y no presente obstáculos que dificulten la recepción de mensajes.</p>
+        <p>Una vez finalizado el proceso de compra, el Usuario recibirá un correo electrónico de confirmación del pedido realizado, precio y desglose de los impuestos que resultasen de aplicación así como los costes de envío. Si el Usuario no ha recibido dicho correo electrónico deberá comprobar la carpeta de spam. En caso de no localizarlo, recomendamos que se contacte con MURCIANITOS o el Afiliado responsable del pedido para verificar la gestión satisfactoria del mismo.</p>
+        <p>Los pedidos realizados por Usuarios menores de 18 años de edad no podrán ser gestionados si entre los Productos seleccionados se encuentran bebidas alcohólicas, de conformidad con lo dispuesto en Ley 11/2010, de 17 de diciembre, de prevención del consumo de bebidas alcohólicas en menores de edad.</p>
+
+        <h4>4. Precios</h4>
+        <p>Los precios de los Productos que se ofrecen a través del Sitio Web incluyen IVA y cualesquiera otros impuestos aplicables así como los gastos de envío de los Productos. Los impuestos, tasas y gastos de envío podrán variar en función de la zona fiscal o física desde donde se realice el pedido.</p>
+        <p>MURCIANITOS se reserva el derecho a modificar los precios reflejados en el Sitio Web en cualquier momento. Los Productos se facturarán al precio en vigor reflejado en el Sitio Web en el momento del registro del pedido, salvo error tipográfico evidente.</p>
+        <p>Actualmente, el coste de envío a domicilio del pedido mínimo online variará en función del importe total del ticket de compra.</p>
+
+        <h4>5. Pago</h4>
+        <p>El Usuario se compromete a pagar en el momento en el que realiza el pedido. El Usuario deberá abonar el importe correspondiente a su pedido mediante pago a través de tarjeta de crédito o de débito (Visa y Mastercard).</p>
+        <p>Asimismo, MURCIANITOS manifiesta que no tiene acceso a datos relativos al medio de pago utilizado y, por tanto, tampoco los almacena; siendo también inaccesibles a otros terceros.</p>
+        <p>El Usuario deberá notificar a MURCIANITOS cualquier cargo indebido o fraudulento en la tarjeta utilizada para las compras, mediante email a info@murcianitos.com, en el menor plazo de tiempo posible para que MURCIANITOS pueda realizar las gestiones oportunas.</p>
+        <p>Cuando la venta y la entrega del Producto sean realizadas por un Afiliado, será éste el encargado de gestionar el pedido y realizar el cobro correspondiente.</p>
+
+        <h4>6. Plazos, lugar de entrega y entregas no realizadas</h4>
+        <p><strong>a. Entrega:</strong> MURCIANITOS se compromete a que el Producto entregado se encuentre en perfecto estado en la dirección que el Usuario señale en el formulario de pedido.</p>
+        <p>Los Productos adquiridos se entregarán a la persona y en la dirección indicada, dentro del plazo indicado –no obstante dicho plazo será siempre estimativo-. En el caso de no disponer del Producto seleccionado en el momento de tramitar el pedido, MURCIANITOS contactará con el Usuario para ofrecerle alguna otra opción o en su defecto abonarle el importe del Producto no servido, así como la parte correspondiente a los gastos de envío (en el supuesto que aplique).</p>
+        <p><strong>b. Plazo de entrega:</strong> El plazo de entrega, en todo caso orientativo, se indicará a lo largo del proceso de realización del pedido. La entrega dependerá del código postal del Usuario. Este plazo es medio y, por tanto, una estimación. Por ello, es posible que varíen por razones logísticas o de fuerza mayor. Ni MURCIANITOS ni sus Afiliados garantizan que los Productos serán entregados o estarán disponibles para su recogida dentro de dicho tiempo estimado. En casos de retrasos en las entregas, MURCIANITOS o el Afiliado informará al Usuario en cuanto tenga conocimiento de ello.</p>
+        <p><strong>c. Entregas no realizadas:</strong> Si en el momento de la entrega el Usuario se encuentra ausente o no se puede completar el pedido por cualquier causa no imputable a MURCIANITOS o a un Afiliado, MURCIANITOS contactará con el Usuario para ver cómo subsanar la entrega. MURCIANITOS se reserva el derecho de retener el envío de pedidos con direcciones erróneas. MURCIANITOS o sus Afiliados no serán responsables por los errores o perjuicios causados en la entrega cuando la dirección de entrega facilitada por el Usuario no se ajuste al lugar de entrega deseado por el mismo o se hayan omitidos datos relevantes.</p>
+
+        <h4>7. Cancelación y devolución</h4>
+        <p><strong>a. Cancelar un pedido:</strong> El Usuario podrá cancelar su pedido poniéndose en contacto con la tienda encargada de preparar los Productos. Aunque se cancele un pedido, se podrán aplicar cargos por la cancelación dependiendo de los siguientes factores: Si ya se ha asignado un repartidor al pedido, se podrá cobrar un cargo por cancelación. Si ya se ha calentado o preparado el Producto se cobrará el precio de dicho Producto. El Usuario debe tener en cuenta que no cabe la devolución de bienes que puedan deteriorarse o caducar con rapidez como son los Productos ofertados por MURCIANITOS y sus Afiliados.</p>
+        <p><strong>b. Modificar un pedido:</strong> El Usuario podrá modificar el pedido poniéndose en contacto con la tienda encargada de preparar los Productos.</p>
+        <p><strong>c. Pedido erróneo o mala calidad:</strong> Si el pedido del Usuario es erróneo o ha llegado en mal estado podrá contactar con MURCIANITOS a través del correo electrónico info@murcianitos.com. El Usuario deberá comprobar los Productos en el momento de la entrega para verificar la integridad y calidad de éstos con el propósito de dar su conformidad. Sin perjuicio de cualesquiera otros derechos que pudieran corresponderle, el Usuario tendrá derecho al reembolso del precio de los Productos defectuosos o de los productos entregados si no se corresponden con el pedido realizado por el Usuario.</p>
+
+        <h4>8. Responsabilidad</h4>
+        <p>El Usuario reconoce y acepta que, aunque MURCIANITOS realiza sus mejores esfuerzos en asegurar la precisión técnica y fáctica de los contenidos del Sitio Web, éstos no obstante tienen carácter general e indicativo. En consecuencia, MURCIANITOS no se responsabiliza de las decisiones tomadas por el Usuario a partir de la información suministrada a través del Sitio Web.</p>
+        <p>MURCIANITOS únicamente será responsable de los daños que el Usuario pueda sufrir cuando dichos daños sean debidos a la actuación dolosa de MURCIANITOS. MURCIANITOS no será responsable por daños y/o perjuicios de cualquier naturaleza que pudieran deberse a la utilización ilícita del Sitio Web por parte de los Usuarios y/o terceros.</p>
+        <p>MURCIANITOS no será responsable cuando la prestación de los servicios no pudiera realizarse como consecuencia de que los datos facilitados por el Usuario sea falsos, inexactos o incompletos o cuando la entrega no pueda efectuarse por causas ajenas al servicio de entregas. MURCIANITOS o sus Afiliados no se hacen responsables de cualquier perjuicio derivado de alergias o intolerancias alimentarias del Usuario, que deberá ponerse en contacto con la tienda para comprobar que los Productos cumplen con los requisitos del Usuario.</p>
+
+        <h4>9. Responsabilidad frente a las actuaciones de los Afiliados</h4>
+        <p>MURCIANITOS no asume responsabilidad alguna por el funcionamiento de las tiendas de sus Afiliados en la medida en la que éstas son titularidad y se encuentran gestionadas por franquiciados independientes. MURCIANITOS no tiene control sobre sus acciones u omisiones.</p>
+
+        <h4>10. Modificación de las Condiciones Generales</h4>
+        <p>MURCIANITOS se reserva el derecho de modificar, en cualquier momento y sin previo aviso, la presentación y configuración del Sitio Web, así como las Condiciones Generales.</p>
+
+        <h4>11. Comunicaciones con el Usuario</h4>
+        <p>Para el resto de supuestos que no estén expresamente regulados en estas Condiciones Generales, las comunicaciones que el Usuario pretenda remitir a MURCIANITOS se dirigirán al correo electrónico info@murcianitos.com.</p>
+
+        <h4>12. Integridad de las Condiciones Generales</h4>
+        <p>Las presentes Condiciones Generales, la Política de Privacidad, la Política de Cookies y el Aviso Legal constituyen la expresa y única voluntad de MURCIANITOS y el Usuario en relación con su objeto e invalida y sustituye cualesquiera otros acuerdos o contratos, verbales o por escrito, alcanzados por las partes con anterioridad.</p>
+
+        <h4>13. Nulidad parcial</h4>
+        <p>En caso de que cualquier Cláusula de las presentes Condiciones Generales sea declarada nula, se procederá a la retirada o sustitución de la misma.</p>
+
+        <h4>14. Ley aplicable</h4>
+        <p>Las presentes Condiciones Generales se rigen e interpretan de acuerdo con la ley española y que cualquier conflicto o litigio que surja entre el Usuario y MURCIANITOS sea tratado por los juzgados y tribunales competentes de acuerdo con la legislación aplicable.</p>
+
+        <h4>POLÍTICA DE PRIVACIDAD</h4>
+        <p>La presente Política de Privacidad incluye la información en relación con el tratamiento de datos personales que llevará a cabo MURCIANITOS cuando realice un pedido a través de la página web. Para más información, puede remitir un correo electrónico a info@murcianitos.com.</p>
+        <p><strong>Responsable del tratamiento:</strong> MURCIANITOS S.L.</p>
+        <p><strong>¿Qué información recopilamos sobre usted?</strong><br>Cuando realiza un pedido de productos a través del Sitio Web se recaban los datos personales necesarios para la gestión del mismo. Dicho datos incluyen su nombre, correo electrónico, número de teléfono, dirección de entrega y detalles del pedido. La información relativa a la tarjeta de crédito o débito no se almacena por parte de MURCIANITOS.</p>
+        <p><strong>¿Cómo utilizamos la información?</strong><br>Sus datos personales serán tratados para la gestión del pedido realizado. Asimismo, MURCIANITOS utilizará dichos datos personales para el envío de comunicaciones comerciales de productos sobre la base de su interés legítimo. Puede oponerse enviando un correo electrónico a info@murcianitos.com.</p>
+        <p><strong>¿A quién revelamos su información?</strong><br>Sus datos personales necesarios para tramitar el pago del pedido serán comunicados a la plataforma de pago, así como al proveedor logístico.</p>
+        <p><strong>Conservación de datos</strong><br>Sus datos personales serán conservados mientras sean necesarios para tramitar su pedido o, en caso de que haya creado una cuenta de cliente, mientras no dé de baja la misma.</p>
+        <p><strong>Sus Derechos</strong><br>Puede ejercer en cualquier momento sus derechos de acceso, rectificación, oposición, supresión y portabilidad de los datos mediante solicitud dirigida a info@murcianitos.com acompañando copia de su DNI.</p>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="./src/js/main.js"></script>
   <script>
     // Simple SPA View Controller
@@ -995,11 +1184,46 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Active category highlight script
     function setActiveCat(el) {
       document.querySelectorAll('.cat-nav-link').forEach(link => link.classList.remove('active'));
       el.classList.add('active');
     }
+
+    // Modal Terms logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const openBtn = document.getElementById('openTermsModal');
+      const closeBtn = document.getElementById('closeTermsBtn');
+      const overlay = document.getElementById('termsOverlay');
+
+      if(openBtn && closeBtn && overlay) {
+        openBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          overlay.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        });
+
+        const closeModal = () => {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+          if(e.target === overlay) {
+            closeModal();
+          }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+          if(e.key === 'Escape' && overlay.classList.contains('active')) {
+            closeModal();
+          }
+        });
+      }
+    });
 
     // Optional: Update active category on scroll
     window.addEventListener('scroll', () => {

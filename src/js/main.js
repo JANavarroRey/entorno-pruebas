@@ -4,8 +4,9 @@ import { renderTicker, initTickers } from './components/ticker.js';
 import { initGSAP } from './animations/gsap-setup.js';
 import { initReveals, initParallax } from './animations/reveals.js';
 import { initPedirAhora } from './pedir-ahora.js';
+import { initAccessibilityWidget } from './components/accessibility.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAll() {
   // 1. Inject Shared Components OR Initialize them if already static
   
   // Header
@@ -45,4 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelector('.shop-products') || document.querySelector('.cart-sidebar')) {
     initPedirAhora();
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initAccessibilityWidget();
+    initAll();
+  });
+} else {
+  initAccessibilityWidget();
+  initAll();
+}

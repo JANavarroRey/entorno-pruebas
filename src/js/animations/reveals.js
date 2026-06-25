@@ -14,7 +14,7 @@ export function initReveals() {
         scrollTrigger: {
           trigger: el,
           start: "top 85%",
-          toggleActions: "play none none reverse"
+          toggleActions: "play none none none"
         }
       }
     );
@@ -37,7 +37,7 @@ export function initReveals() {
         scrollTrigger: {
           trigger: container,
           start: "top 80%",
-          toggleActions: "play none none reverse"
+          toggleActions: "play none none none"
         }
       }
     );

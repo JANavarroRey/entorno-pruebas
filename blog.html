@@ -556,7 +556,7 @@
           loadMoreContainer.style.display = 'block';
         }
         
-        if (window.ScrollTrigger) {
+        if (window.ScrollTrigger && document.activeElement !== searchInput) {
           setTimeout(() => ScrollTrigger.refresh(), 100);
         }
       }
@@ -572,6 +572,9 @@
 
       if(searchInput) {
         searchInput.addEventListener('input', updateVisibility);
+        searchInput.addEventListener('blur', () => {
+          if (window.ScrollTrigger) setTimeout(() => ScrollTrigger.refresh(), 100);
+        });
       }
 
       if(sortSelect) {

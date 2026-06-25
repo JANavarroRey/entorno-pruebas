@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Archivos de construccion
+dist/
+wp-templates-export/
+
+# Archivos de entorno y logs
+.env
+.env.*
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

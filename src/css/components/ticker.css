@@ -1,0 +1,64 @@
+.ticker-section {
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-ink);
+  color: var(--color-cream);
+  padding: var(--space-lg) 0; /* Increased for breathing room inside the ticker */
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  white-space: nowrap;
+  position: relative;
+  z-index: var(--z-ticker);
+}
+
+.ticker-section.theme-burgundy {
+  background-color: var(--color-burgundy);
+  color: var(--color-white);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.ticker-section.theme-gold {
+  background-color: var(--color-gold);
+  color: var(--color-ink);
+  border-color: rgba(0,0,0,0.1);
+}
+
+.ticker-track {
+  display: inline-flex;
+  will-change: transform;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-label);
+  font-size: var(--text-body-sm); /* Increased from label (12px) to body-sm (14px) */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em; /* Increased tracking */
+  padding: 0 var(--space-xl); /* Increased padding */
+}
+
+.ticker-separator {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+  margin: 0 var(--space-md);
+}
+
+.ticker-section.theme-gold .ticker-separator {
+  background-color: var(--color-ink);
+}
+
+/* GSAP will handle the animation, this is fallback */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.no-js .ticker-track {
+  animation: ticker 30s linear infinite;
+}

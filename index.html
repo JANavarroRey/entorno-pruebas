@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Murcianitos | El nuevo culto al hojaldre</title>
+
+  <!-- Estilos Globales y Componentes -->
+  <link rel="stylesheet" href="./src/css/reset.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/base.css">
+  <link rel="stylesheet" href="./src/css/components/header.css">
+  <link rel="stylesheet" href="./src/css/components/footer.css">
+  <link rel="stylesheet" href="./src/css/components/buttons.css">
+  <link rel="stylesheet" href="./src/css/components/hero.css">
+  <link rel="stylesheet" href="./src/css/components/ticker.css">
+  <link rel="stylesheet" href="./src/css/components/cards.css">
+
+  <!-- GSAP Core & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* Estilos específicos de Home */
+    .section {
+      padding: var(--space-3xl) 0;
+      /* Reduced from var(--space-section) which was too large (up to 140px) */
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas: "stacked";
+    }
+
+    @media (min-width: 1024px) {
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "image text";
+        gap: var(--space-4xl);
+        align-items: center;
+      }
+    }
+
+    .about-image {
+      grid-area: stacked;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 75vh;
+      /* Cinematic tall image on mobile */
+      width: 100%;
+      position: relative;
+    }
+
+    /* Gradient overlay for mobile text legibility */
+    .about-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(29, 29, 27, 0.95) 80%, rgba(29, 29, 27, 1) 100%);
+      z-index: 1;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+    }
+
+    .about-content {
+      grid-area: stacked;
+      position: relative;
+      z-index: 2;
+      align-self: end;
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    @media (min-width: 1024px) {
+      .about-image {
+        grid-area: image;
+        height: 60vh;
+      }
+
+      .about-image::after {
+        display: none;
+        /* Remove gradient on desktop */
+      }
+
+      .about-content {
+        grid-area: text;
+        padding: 0;
+        align-self: center;
+      }
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      margin-top: var(--space-3xl);
+    }
+
+    @media (min-width: 768px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .gifting-banner {
+      background-color: var(--surface-dark);
+      color: var(--color-cream);
+      text-align: center;
+      padding: var(--space-5xl) var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gifting-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .instagram-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-2xl);
+    }
+
+    @media (min-width: 768px) {
+      .instagram-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .ig-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+    }
+
+    .ig-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration-normal) var(--ease-smooth);
+    }
+
+    .ig-item:hover img {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Dynamic Header -->
+  <div id="header-placeholder" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 100;"></div>
+
+  <main>
+    <!-- 1. Hero Section -->
+    <section class="hero-fullscreen">
+      <!-- Background Image -->
+      <img src="./src/assets/Murcianitos.png" alt="Murcianitos Fondo" class="hero-fullscreen-bg">
+      <div class="hero-overlay"></div>
+
+      <!-- Content -->
+      <div class="hero-fullscreen-content" data-reveal="fade-up">
+        <h1 class="hero-title-giant" style="color: var(--color-white);">El nuevo culto al hojaldre</h1>
+        <p class="hero-subtitle-gold">TRADICIÓN MURCIANA DESDE 1695. REINVENTADA PARA EL MUNDO</p>
+        <div class="hero-actions" style="justify-content: center; margin-top: var(--space-xl);">
+          <a href="/pedir-ahora.html" class="btn btn-primary">Pedir Murcianitos</a>
+          <a href="/carta.html" class="btn btn-secondary"
+            style="background: rgba(255,255,255,0.1); border-color: white; color: white;">Ver Carta</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Ticker Marquee -->
+    <div class="ticker-placeholder" data-theme="burgundy"></div>
+
+    <!-- 3. About Section (Dark Mode) -->
+    <section class="section theme-dark" style="background-color: var(--surface-dark);">
+      <div class="container about-grid">
+        <div class="about-image">
+          <img src="./src/assets/obrador-tradicion.jpeg" alt="Artesano en un obrador tradicional" data-parallax="true">
+        </div>
+        <div class="about-content" data-reveal="fade-up">
+          <div
+            style="color: var(--color-gold); font-family: var(--font-label); font-size: var(--text-label); font-weight: 700; letter-spacing: 0.15em; display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-sm);">
+            EST. 1695 <span
+              style="display: block; width: 50px; height: 1px; background-color: var(--color-gold); opacity: 0.6;"></span>
+          </div>
+          <h2 class="hero-title">Tres siglos de tradición</h2>
+          <p class="hero-desc">Protegemos el alma del pastel de carne murciano. Cada Murcianito es un tributo vivo a la
+            receta original de 1695, elaborado a mano, con rellenos únicos y coronado por nuestro inconfundible hojaldre
+            en espiral.</p>
+          <a href="/nuestra-historia.html" class="btn btn-ghost">Descubre Nuestra Historia</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Selección Especial -->
+    <section class="section">
+      <div class="container">
+        <div style="text-align: center; max-width: 900px; margin: 0 auto;" data-reveal="fade-up">
+          <span class="hero-label"
+            style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Nuestros
+            Favoritos</span>
+          <h2 style="margin: var(--space-sm) 0;">Selección Especial</h2>
+          <p
+            style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-secondary); margin-top: var(--space-xs);">
+            Una colección de clásicos y nuevas creaciones para enamorarte del hojaldre</p>
+        </div>
+
+        <div class="products-grid" data-reveal="stagger">
+          <!-- Product 1 -->
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3804.jpg" alt="Murcianito Clásico" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Clásico</h3>
+              <p class="card-desc">Ternera especiada, chorizo, huevo duro y el hojaldre perfecto</p>
+            </div>
+          </article>
+
+          <!-- Product 2 -->
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-burgundy">Nuevo</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3798.jpg" alt="Murcianito Ibérico" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Ibérico</h3>
+              <p class="card-desc">Cerdo ibérico con toque de Pimentón de la Vera</p>
+            </div>
+          </article>
+
+          <!-- Product 3 -->
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 6</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/pack_6_box.png" alt="Pack La Cuadrilla" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "La Cuadrilla"</h3>
+              <p class="card-desc">Caja degustación de 6 unidades. Ideal para compartir</p>
+            </div>
+          </article>
+
+          <!-- Product 4 -->
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 12</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/pack_12_box.png" alt="Pack El Bando" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "El Bando"</h3>
+              <p class="card-desc">Caja grande de 12 unidades para grandes celebraciones</p>
+            </div>
+          </article>
+
+          <!-- Product 5 -->
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3826.jpg" alt="Murcianito Trufado" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Trufado</h3>
+              <p class="card-desc">Ternera con crema de boletus y trufa negra</p>
+            </div>
+          </article>
+
+          <!-- Product 6 -->
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Edición Cuaresma" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Edición "Cuaresma"</h3>
+              <p class="card-desc">Bacalao, tomate frito artesano y pimientos asados</p>
+            </div>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-2xl);">
+          <a href="/carta.html" class="btn btn-secondary">Ver Todos los Sabores</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Ticker Marquee Gold -->
+    <div class="ticker-placeholder" data-theme="gold"></div>
+
+    <!-- 6. Gifting Banner -->
+    <section class="gifting-banner" data-reveal="fade-up">
+      <img src="./src/assets/rustic_murcianitos_box.png" alt="Regalo" class="gifting-bg" style="opacity: 0.4;">
+      <div class="container" style="position: relative; z-index: 2; max-width: 800px; margin: 0 auto;">
+        <span
+          style="display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-gold); margin-bottom: var(--space-md);">El
+          Detalle Perfecto</span>
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); margin: 0; line-height: 1.1; color: var(--color-white);">Comparte
+          Historia,</h2>
+        <h2
+          style="font-family: var(--font-headline); font-size: clamp(2.5rem, 5vw, 4rem); font-style: italic; font-weight: 400; color: var(--color-gold); margin: 0 0 var(--space-lg) 0; line-height: 1.1;">
+          Saborea el Momento</h2>
+        <p class="hero-desc" style="color: rgba(255, 255, 255, 0.9); margin: 0 auto var(--space-xl); max-width: 650px;">Una experiencia gastronómica premium diseñada para compartir y disfrutar.</p>
+        <a href="/carta.html#packs" class="btn btn-gold"
+          style="padding: 14px 32px; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">VER CAJAS DEGUSTACIÓN</a>
+      </div>
+    </section>
+
+    <!-- 7. Instagram -->
+    <section class="section">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: var(--space-xl);" data-reveal="fade-up">
+          <span class="hero-label"
+            style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Únete
+            al culto</span>
+          <h2>@murcianitos_oficial</h2>
+        </div>
+
+        <div class="instagram-grid" data-reveal="stagger">
+          <a href="https://www.instagram.com/murcianitos_oficial/" target="_blank" class="ig-item stagger-item">
+            <img src="./src/assets/Metro.png" alt="Campaña Metro">
+          </a>
+          <a href="https://www.instagram.com/murcianitos_oficial/" target="_blank" class="ig-item stagger-item">
+            <img src="./src/assets/Cartel%20gigante.png" alt="Campaña Cartel Gigante">
+          </a>
+          <a href="https://www.instagram.com/murcianitos_oficial/" target="_blank" class="ig-item stagger-item">
+            <img src="./src/assets/Caballete.jpg" alt="Campaña Caballete">
+          </a>
+          <a href="https://www.instagram.com/murcianitos_oficial/" target="_blank" class="ig-item stagger-item">
+            <img src="./src/assets/Lona%202.png" alt="Campaña Lona">
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Dynamic Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Entry Script -->
+  <script type="module" src="./src/js/main.js"></script>
+</body>
+
+</html>

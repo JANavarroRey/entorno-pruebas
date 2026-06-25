@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Murcianitos</title>
+  
+  <link rel="stylesheet" href="./src/css/reset.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/base.css">
+  <link rel="stylesheet" href="./src/css/components/header.css">
+  <link rel="stylesheet" href="./src/css/components/footer.css">
+  <link rel="stylesheet" href="./src/css/components/buttons.css">
+  <link rel="stylesheet" href="./src/css/components/hero.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      padding-bottom: var(--space-4xl);
+    }
+    @media (min-width: 768px) {
+      .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    /* --- BLOG CARDS --- */
+    .blog-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Push content to bottom in mobile */
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background-color: var(--surface-card);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--duration-normal) var(--ease-smooth);
+      height: 280px; /* Fixed height for mobile cinematic card */
+    }
+    .blog-card:hover {
+      transform: translateY(-8px);
+    }
+    
+    .blog-image {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    
+    /* Dark gradient overlay for mobile text legibility */
+    .blog-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 80%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(29, 29, 27, 0.9) 100%);
+      z-index: 2;
+    }
+    
+    .blog-content {
+      position: relative;
+      z-index: 3; /* Above the gradient and image */
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    
+    .blog-meta {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      color: var(--color-gold); /* Make gold to stand out on dark bg */
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .blog-title {
+      font-family: var(--font-headline);
+      font-size: 1.35rem;
+      color: var(--color-white); /* White text for mobile overlay */
+      margin-bottom: 0;
+      line-height: 1.2;
+    }
+    
+    .blog-excerpt {
+      display: none; /* Hide excerpt on mobile */
+    }
+
+    /* Expand the link to cover the entire card on all devices */
+    .blog-card .btn-ghost {
+      position: static; 
+      display: inline-block;
+      text-decoration: none;
+      padding-bottom: 4px;
+      
+      background: linear-gradient(to right, var(--color-gold) 50%, var(--color-ink) 50%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      transition: background-position 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      
+      /* Hide text on mobile for compactness, but keep it clickable */
+      font-size: 0; 
+    }
+
+    .blog-card .btn-ghost::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 10;
+    }
+
+    .blog-card .btn-ghost::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1.5px;
+      background: linear-gradient(to right, var(--color-gold) 50%, var(--color-ink) 50%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      transition: background-position 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      opacity: 0; /* Hide underline on mobile */
+    }
+
+    .blog-card:hover .btn-ghost {
+      background-position: 0 0;
+    }
+    .blog-card:hover .btn-ghost::after {
+      background-position: 0 0;
+    }
+    
+    /* --- Responsive Desktop (Restore original layout) --- */
+    @media (min-width: 768px) {
+      .blog-card {
+        height: auto; /* Remove fixed height */
+        justify-content: flex-start;
+      }
+      
+      .blog-image {
+        position: static; /* Put image back into document flow */
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+      }
+      
+      .blog-card::after {
+        display: none; /* Remove dark gradient overlay */
+      }
+      
+      .blog-content {
+        padding: var(--space-lg);
+        justify-content: flex-start;
+        flex: 1;
+      }
+      
+      .blog-meta {
+        font-size: var(--text-label-sm);
+        color: var(--text-muted); /* Restore original color */
+        margin-bottom: var(--space-sm);
+      }
+      
+      .blog-title {
+        font-size: var(--text-h3);
+        color: var(--color-ink); /* Restore original color */
+        margin-bottom: var(--space-sm);
+      }
+      
+      .blog-excerpt {
+        display: block; /* Show excerpt */
+        color: var(--text-secondary);
+        font-size: var(--text-body-sm);
+        margin-bottom: var(--space-lg);
+        flex: 1;
+      }
+      
+      .blog-card .btn-ghost {
+        font-size: 0.85rem; /* Restore text size */
+        position: relative; /* Restore relative positioning for underline */
+        align-self: flex-start;
+        margin-top: auto;
+      }
+      
+      .blog-card .btn-ghost::after {
+        opacity: 1; /* Show underline on desktop */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="hero-section hero-center" style="padding-top: calc(var(--space-4xl) + 80px); padding-bottom: var(--space-xl); background-color: var(--color-cream); color: var(--color-ink);">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label" style="margin-bottom: var(--space-sm);">BLOG</span>
+        <h1 class="hero-title" style="color: var(--color-ink); margin-bottom: var(--space-sm); font-size: clamp(2.5rem, 5vw, 4rem);">Crónicas del Hojaldre</h1>
+        <p class="hero-desc" style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Historias, recetas y novedades del mundo Murcianitos.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        
+        <style>
+          .blog-controls-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-4xl);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50px;
+          }
+          
+          .search-wrapper {
+            position: relative;
+            background: #FFFFFF;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+          }
+          
+          .search-wrapper .material-symbols-outlined {
+            position: absolute;
+            left: 1.5rem;
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            pointer-events: none;
+          }
+          
+          .search-wrapper input {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+          }
+          
+          .filter-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0.5rem 1rem;
+          }
+          
+          .custom-dropdown {
+            position: relative;
+            user-select: none;
+          }
+          
+          .custom-dropdown-selected {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            cursor: pointer;
+            padding: 0.5rem 0;
+          }
+          
+          .dropdown-label {
+            font-family: var(--font-label);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+          
+          .dropdown-value {
+            font-family: var(--font-label);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-ink);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+          
+          .dropdown-icon {
+            font-size: 1.2rem;
+            color: var(--color-ink);
+            transition: transform 0.2s ease;
+          }
+          
+          .custom-dropdown.open .dropdown-icon {
+            transform: rotate(180deg);
+          }
+          
+          .custom-dropdown-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #FFFFFF;
+            min-width: 180px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease;
+            z-index: 100;
+            list-style: none;
+            padding: var(--space-xs);
+            margin: 0;
+            border: 1px solid rgba(0,0,0,0.05);
+          }
+          
+          .custom-dropdown.open .custom-dropdown-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+          }
+          
+          .custom-dropdown-options li {
+            padding: var(--space-sm) var(--space-md);
+            font-family: var(--font-label);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: background 0.2s, color 0.2s;
+          }
+          
+          .custom-dropdown-options li:hover {
+            background: var(--surface-light);
+            color: var(--color-ink);
+          }
+          
+          .custom-dropdown-options li.active {
+            color: var(--color-gold);
+          }
+
+          @media (min-width: 768px) {
+            .blog-controls-container {
+              flex-direction: row;
+              background: #FFFFFF;
+              box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+              padding: 0.5rem 1rem 0.5rem 1.5rem;
+            }
+            .search-wrapper {
+              flex: 1;
+              box-shadow: none;
+              background: transparent;
+            }
+            .search-wrapper .material-symbols-outlined {
+              left: 0.5rem;
+            }
+            .search-wrapper input {
+              padding: 1rem 1rem 1rem 2.5rem;
+            }
+            .filter-wrapper {
+              border-left: 1px solid rgba(0,0,0,0.08);
+              padding-left: var(--space-md);
+            }
+          }
+        </style>
+
+        <!-- Controls -->
+        <div class="blog-controls-container" data-reveal="fade-up">
+          <div class="search-wrapper">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" id="blog-search" placeholder="Buscar artículos...">
+          </div>
+          <div class="filter-wrapper">
+            <div class="custom-dropdown" id="custom-sort-dropdown">
+              <div class="custom-dropdown-selected">
+                <span class="dropdown-label">Ordenar:</span>
+                <span class="dropdown-value">Más recientes</span>
+                <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+              </div>
+              <ul class="custom-dropdown-options">
+                <li data-value="newest" class="active">Más recientes</li>
+                <li data-value="oldest">Más antiguos</li>
+              </ul>
+              <!-- Hidden select for fallback/logic -->
+              <select id="blog-sort" style="display: none;">
+                <option value="newest">Más recientes</option>
+                <option value="oldest">Más antiguos</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-grid" id="blog-grid" data-reveal="stagger">
+          
+          <!-- Article 1 -->
+          <article class="blog-card stagger-item" data-date="2026-05-12">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop" alt="Artesano" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Historia • 12 Mayo 2026</span>
+              <h3 class="blog-title">El secreto de nuestro hojaldre</h3>
+              <p class="blog-excerpt">Descubre cómo conseguimos esas capas perfectas y crujientes que hacen único a nuestro pastel de carne.</p>
+              <a href="./blog-secreto-hojaldre.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 2 (Chato Murciano) -->
+          <article class="blog-card stagger-item" data-date="2026-04-05">
+            <img src="https://images.unsplash.com/photo-1608889825103-eb5ed706fc64?q=80&w=800&auto=format&fit=crop" alt="Chato Murciano" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Ingredientes • 05 Abril 2026</span>
+              <h3 class="blog-title">El auténtico chato murciano</h3>
+              <p class="blog-excerpt">Por qué elegimos esta raza autóctona y cómo la especiamos para lograr el sabor tradicional de 1695.</p>
+              <a href="./blog-chato-murciano.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="blog-card stagger-item" data-date="2026-03-20">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop" alt="Evento" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Eventos • 20 Marzo 2026</span>
+              <h3 class="blog-title">Murcianitos en Bando de la Huerta</h3>
+              <p class="blog-excerpt">Resumen fotográfico de cómo celebramos las fiestas de primavera este año con todos vosotros.</p>
+              <a href="./blog-bando-huerta.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 4 -->
+          <article class="blog-card stagger-item" data-date="2026-02-15">
+            <img src="./src/assets/IMG_3826.jpg" alt="Manteca" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Ingredientes • 15 Febrero 2026</span>
+              <h3 class="blog-title">La manteca ibérica perfecta</h3>
+              <p class="blog-excerpt">El ingrediente invisible que aporta la textura y el sabor inconfundible a nuestra masa artesanal.</p>
+              <a href="./blog-manteca-iberica.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 5 -->
+          <article class="blog-card stagger-item" data-date="2026-01-10">
+            <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=800&auto=format&fit=crop" alt="Historia" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Historia • 10 Enero 2026</span>
+              <h3 class="blog-title">El origen del pastel de carne</h3>
+              <p class="blog-excerpt">Un viaje en el tiempo hasta 1695 para entender cómo nació esta joya gastronómica en nuestra región.</p>
+              <a href="./blog-origen-pastel.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 6 -->
+          <article class="blog-card stagger-item" data-date="2025-12-05">
+            <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=800&auto=format&fit=crop" alt="Maridaje" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Gastronomía • 05 Diciembre 2025</span>
+              <h3 class="blog-title">El maridaje perfecto</h3>
+              <p class="blog-excerpt">Vino de Jumilla, cerveza artesanal o vermut. Te contamos qué bebida acompaña mejor a cada sabor.</p>
+              <a href="./blog-maridaje.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 7 -->
+          <article class="blog-card stagger-item" data-date="2025-11-20">
+            <img src="https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?q=80&w=800&auto=format&fit=crop" alt="Creatividad" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Obrador • 20 Noviembre 2025</span>
+              <h3 class="blog-title">Ediciones Limitadas</h3>
+              <p class="blog-excerpt">Entramos en la mente de nuestros maestros artesanos para ver cómo nacen las nuevas creaciones.</p>
+              <a href="./blog-ediciones-limitadas.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 8 -->
+          <article class="blog-card stagger-item" data-date="2025-10-14">
+            <img src="https://images.unsplash.com/photo-1587241321921-91a834d6d191?q=80&w=800&auto=format&fit=crop" alt="Obrador" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Obrador • 14 Octubre 2025</span>
+              <h3 class="blog-title">Nuestro obrador por dentro</h3>
+              <p class="blog-excerpt">Un tour virtual por las instalaciones donde la magia ocurre cada madrugada antes de que salga el sol.</p>
+              <a href="./blog-obrador-dentro.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+          <!-- Article 9 -->
+          <article class="blog-card stagger-item" data-date="2025-09-30">
+            <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=800&auto=format&fit=crop" alt="Huevo duro" class="blog-image">
+            <div class="blog-content">
+              <span class="blog-meta">Ingredientes • 30 Septiembre 2025</span>
+              <h3 class="blog-title">El arte del huevo duro</h3>
+              <p class="blog-excerpt">No cualquier huevo sirve. Descubre nuestro proceso de cocción para que quede perfecto dentro del pastel.</p>
+              <a href="./blog-huevo-duro.html" class="btn btn-ghost" style="align-self: flex-start;">Leer Artículo</a>
+            </div>
+          </article>
+
+        </div>
+
+        <div id="load-more-container" style="text-align: center; margin-top: var(--space-xl); padding-bottom: var(--space-4xl);" data-reveal="fade-up">
+          <button id="btn-load-more" class="btn btn-secondary" style="min-width: 280px;">VER MÁS ARTÍCULOS</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script type="module" src="./src/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('blog-grid');
+      const articles = Array.from(grid.querySelectorAll('.blog-card'));
+      const searchInput = document.getElementById('blog-search');
+      const sortSelect = document.getElementById('blog-sort');
+      const loadMoreBtn = document.getElementById('btn-load-more');
+      const loadMoreContainer = document.getElementById('load-more-container');
+      
+      let visibleCount = 3;
+      if (window.location.search.includes('all=true')) {
+        visibleCount = articles.length;
+      }
+      let isSearching = false;
+
+      function updateVisibility() {
+        const query = searchInput.value.toLowerCase().trim();
+        isSearching = query.length > 0;
+
+        articles.forEach((article, index) => {
+          const title = article.querySelector('.blog-title').textContent.toLowerCase();
+          const excerpt = article.querySelector('.blog-excerpt').textContent.toLowerCase();
+          const matchesSearch = title.includes(query) || excerpt.includes(query);
+
+          if (isSearching) {
+            article.style.display = matchesSearch ? 'flex' : 'none';
+          } else {
+            article.style.display = index < visibleCount ? 'flex' : 'none';
+          }
+        });
+
+        if (isSearching || visibleCount >= articles.length) {
+          loadMoreContainer.style.display = 'none';
+        } else {
+          loadMoreContainer.style.display = 'block';
+        }
+        
+        if (window.ScrollTrigger) {
+          setTimeout(() => ScrollTrigger.refresh(), 100);
+        }
+      }
+
+      updateVisibility();
+
+      if(loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+          visibleCount += 6;
+          updateVisibility();
+        });
+      }
+
+      if(searchInput) {
+        searchInput.addEventListener('input', updateVisibility);
+      }
+
+      if(sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          const order = e.target.value;
+          
+          articles.sort((a, b) => {
+            const dateA = new Date(a.dataset.date).getTime();
+            const dateB = new Date(b.dataset.date).getTime();
+            return order === 'newest' ? dateB - dateA : dateA - dateB;
+          });
+
+          articles.forEach(article => grid.appendChild(article));
+          updateVisibility();
+        });
+
+        // Custom Dropdown UI Logic
+        const dropdown = document.getElementById('custom-sort-dropdown');
+        if (dropdown) {
+          const selected = dropdown.querySelector('.custom-dropdown-selected');
+          const options = dropdown.querySelectorAll('.custom-dropdown-options li');
+          const valueText = dropdown.querySelector('.dropdown-value');
+          
+          selected.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('open');
+          });
+          
+          document.addEventListener('click', () => {
+            dropdown.classList.remove('open');
+          });
+          
+          options.forEach(option => {
+            option.addEventListener('click', () => {
+              options.forEach(opt => opt.classList.remove('active'));
+              option.classList.add('active');
+              valueText.textContent = option.textContent;
+              
+              sortSelect.value = option.dataset.value;
+              sortSelect.dispatchEvent(new Event('change'));
+            });
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

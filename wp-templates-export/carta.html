@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú | Murcianitos</title>
+  
+  <link rel="stylesheet" href="./src/css/reset.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/base.css">
+  <link rel="stylesheet" href="./src/css/components/header.css">
+  <link rel="stylesheet" href="./src/css/components/footer.css">
+  <link rel="stylesheet" href="./src/css/components/buttons.css">
+  <link rel="stylesheet" href="./src/css/components/hero.css">
+  <link rel="stylesheet" href="./src/css/components/ticker.css">
+  <link rel="stylesheet" href="./src/css/components/cards.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    .menu-category {
+      padding: var(--space-2xl) 0;
+    }
+    .category-header {
+      margin-bottom: var(--space-xl);
+      text-align: center;
+    }
+    
+    @media (min-width: 768px) {
+      .menu-category {
+        padding: var(--space-4xl) 0;
+      }
+      .category-header {
+        margin-bottom: var(--space-2xl);
+      }
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-xl);
+    }
+  </style>
+</head>
+<body>
+
+  
+    <header class="site-header is-light-theme">
+      <div class="container header-container">
+        <!-- Mobile Toggle -->
+        <button class="mobile-toggle" aria-label="Abrir menú" style="z-index: 2; position: relative;">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <!-- Desktop Nav Left -->
+        <nav class="header-nav-left">
+          <a href="./index.html" class="nav-link ">Inicio</a>
+          <a href="./nuestra-historia.html" class="nav-link ">Historia</a>
+          <a href="./carta.html" class="nav-link ${currentPath.includes('carta') ? 'active' : ''}">Carta</a>
+        </nav>
+
+        <!-- Center Logo -->
+        <a href="./index.html" class="header-logo" style="z-index: 2; position: relative;">
+          <img src="./src/assets/icono-blanco.png" alt="Murcianitos" class="logo-light" />
+          <img src="./src/assets/icono-negro.png" alt="Murcianitos" class="logo-dark" />
+        </a>
+
+        <!-- Desktop Nav Right -->
+        <nav class="header-nav-right">
+          <a href="./eventos.html" class="nav-link ">Eventos</a>
+          <a href="./blog.html" class="nav-link ">Blog</a>
+          <a href="./pedir-ahora.html" class="btn btn-primary" style="margin-left: var(--space-md);">Pedir Ahora</a>
+        </nav>
+
+        <!-- Mobile CTA -->
+        <div class="mobile-cta" style="z-index: 2; position: relative;">
+          <a href="./pedir-ahora.html" class="btn" style="border: 1px solid rgba(197, 160, 89, 0.5); color: var(--color-gold); background: transparent; padding: 6px 14px; font-size: 0.75rem; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.1em; border-radius: 4px;">Pedir</a>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay">
+          <nav class="mobile-nav">
+            <a href="./index.html" class="nav-link ">Inicio</a>
+            <a href="./nuestra-historia.html" class="nav-link ">Historia</a>
+            <a href="./carta.html" class="nav-link ${currentPath.includes('carta') ? 'active' : ''}">Carta</a>
+            <a href="./eventos.html" class="nav-link ">Eventos</a>
+            <a href="./blog.html" class="nav-link ">Blog</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+  
+
+  <main>
+    <section class="hero-section hero-center hero-menu-padding" style="background-color: var(--color-cream); min-height: 40vh;">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label">Nuestro Catálogo</span>
+        <h1 class="hero-title" style="color: var(--text-primary);">El Arte del Hojaldre</h1>
+        <p class="hero-desc" style="color: var(--text-secondary);">Desde la receta original de 1695 a nuestras nuevas creaciones.</p>
+      </div>
+    </section>
+
+    <!-- Individuales Salados -->
+    <section class="menu-category theme-dark" id="salados" style="background-color: var(--surface-dark);">
+      <div class="container">
+        <div class="category-header" data-reveal="fade-up">
+          <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Tradición e Innovación</span>
+          <h2 style="color: var(--color-cream); margin: var(--space-sm) 0;">Individuales Salados</h2>
+          <p style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-on-dark-muted); margin-top: var(--space-xs);">Nuestros clásicos y nuevas creaciones</p>
+        </div>
+        <div class="products-grid" data-reveal="stagger">
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3804.jpg" alt="Murcianito Clásico" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Clásico</h3>
+              <p class="card-desc">Ternera especiada, chorizo, huevo duro y el hojaldre perfecto.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-burgundy">Nuevo</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3798.jpg" alt="Murcianito Ibérico" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Ibérico</h3>
+              <p class="card-desc">Cerdo ibérico con toque de Pimentón de la Vera.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3826.jpg" alt="Murcianito Trufado" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Trufado</h3>
+              <p class="card-desc">Ternera con crema de boletus y trufa negra.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Edición Cuaresma" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Edición "Cuaresma"</h3>
+              <p class="card-desc">Bacalao, tomate frito artesano y pimientos asados.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3804.jpg" alt="Murcianito Queso de Cabra" class="card-image" style="filter: contrast(1.1);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Cabra</h3>
+              <p class="card-desc">Ternera, cebolla caramelizada y queso de cabra fundido.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Vegano</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3798.jpg" alt="Murcianito Vegano" class="card-image" style="filter: saturate(1.2);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Vegano</h3>
+              <p class="card-desc">Heura especiada, verduras asadas y hojaldre 100% vegetal.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Individuales Dulces -->
+    <section class="menu-category" id="dulces" style="background-color: var(--color-cream);">
+      <div class="container">
+        <div class="category-header" data-reveal="fade-up">
+          <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Para los más golosos</span>
+          <h2 style="margin: var(--space-sm) 0;">Individuales Dulces</h2>
+          <p style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-secondary); margin-top: var(--space-xs);">El contraste perfecto para terminar</p>
+        </div>
+        <div class="products-grid" data-reveal="stagger">
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Murcianito Chocolate" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Chocolate</h3>
+              <p class="card-desc">Hojaldre relleno de crema de chocolate belga y avellanas.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Murcianito Cabello de Ángel" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Cabello de Ángel</h3>
+              <p class="card-desc">El clásico relleno dulce tradicional con un toque de canela.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Temporada</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Murcianito Crema" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Crema</h3>
+              <p class="card-desc">Suave crema pastelera tostada con vainilla bourbon.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Murcianito Pistacho" class="card-image" style="filter: hue-rotate(-30deg);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Pistacho</h3>
+              <p class="card-desc">Relleno de praliné de pistacho verde y chocolate blanco.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-burgundy">Navidad</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Murcianito Turrón" class="card-image" style="filter: brightness(1.1);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Turrón</h3>
+              <p class="card-desc">Suave crema de turrón de Jijona con almendras tostadas.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="./src/assets/IMG_3825.jpg" alt="Murcianito Lemon Pie" class="card-image" style="filter: contrast(1.2) saturate(1.5);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Lemon Pie</h3>
+              <p class="card-desc">Crema de limón ácida coronada con dulce merengue italiano.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-category theme-dark" id="packs" style="background-color: var(--surface-dark); scroll-margin-top: 80px;">
+      <div class="container">
+        <div class="category-header" data-reveal="fade-up">
+          <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Para Eventos y Reuniones</span>
+          <h2 style="color: var(--color-cream); margin: var(--space-sm) 0;">Para Compartir</h2>
+          <p style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-on-dark-muted); margin-top: var(--space-xs);">Nuestras cajas degustación</p>
+        </div>
+        <div class="products-grid" data-reveal="stagger">
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 3</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/pack_3_box.png" alt="Pack Degustación" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "Degustación"</h3>
+              <p class="card-desc">Caja degustación de 3 unidades. Ideal para pequeñas reuniones.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 6</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/pack_6_box.png" alt="Pack La Cuadrilla" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "La Cuadrilla"</h3>
+              <p class="card-desc">Caja de 6 unidades con selección de sabores de autor (Trufado, Ibérico).</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 12</span></div>
+            <div class="card-image-wrap">
+              <img src="./src/assets/pack_12_box.png" alt="Pack El Bando" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "El Bando"</h3>
+              <p class="card-desc">Caja grande de 12 unidades variadas para grandes celebraciones.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eventos CTA -->
+    <section class="section" style="background-color: var(--color-burgundy); color: var(--color-white); text-align: center; padding: var(--space-5xl) var(--space-md);">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Celebraciones Especiales</span>
+        <h2 style="color: var(--color-white); margin: var(--space-md) 0; font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3rem);">Lleva Murcianitos a tu Evento</h2>
+        <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; max-width: 600px; margin: 0 auto var(--space-xl); line-height: 1.6;">Bodas, comuniones o reuniones corporativas. Sorprende a tus invitados con un <em>corner exclusivo</em> del auténtico pastel de carne reinventado.</p>
+        <a href="./eventos.html" class="btn btn-primary" style="padding: 12px 32px; font-size: 1rem; background-color: var(--color-gold); color: var(--color-ink); border-color: var(--color-gold);">Descubrir Servicios</a>
+      </div>
+    </section>
+
+    <!-- Alérgenos -->
+    <section class="section" style="background-color: var(--color-cream); padding: var(--space-3xl) var(--space-md);">
+      <div class="container" data-reveal="fade-up">
+        <div style="background-color: #FFFFFF; border: 1px solid rgba(197, 160, 89, 0.3); border-radius: var(--space-md); padding: var(--space-2xl); text-align: center; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-md)';" onmouseout="this.style.transform='none'; this.style.boxShadow='var(--shadow-sm)';">
+          <span class="material-symbols-outlined" style="color: var(--color-gold); font-size: 2.5rem; margin-bottom: var(--space-sm);">info</span>
+          <h3 style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--color-ink); margin-bottom: var(--space-xs);">Información de Alérgenos</h3>
+          <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: var(--space-lg);">La artesanía tiene sus ingredientes. Todos nuestros productos de hojaldre contienen <strong>gluten (trigo)</strong>, <strong>huevo</strong> y <strong>lácteos</strong>, y son elaborados en un obrador donde pueden existir trazas de <strong>frutos secos</strong>.</p>
+          <a href="./alergenos.html" class="btn-link-fill">Consultar tabla completa</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Brand -->
+          <div class="footer-brand">
+            <img src="./src/assets/logo-blanco.png" alt="Murcianitos" class="footer-logo" />
+          </div>
+
+          <!-- Explorar -->
+          <div class="footer-col">
+            <h4>Explorar</h4>
+            <nav class="footer-links">
+              <a href="./carta.html">Carta</a>
+              <a href="./nuestra-historia.html">Historia</a>
+              <a href="./eventos.html">Eventos</a>
+              <a href="./blog.html">Blog</a>
+              <a href="./faq.html">FAQ</a>
+            </nav>
+          </div>
+
+          <!-- Legal -->
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <nav class="footer-links">
+              <a href="./privacidad.html">Privacidad</a>
+              <a href="./aviso-legal.html">Aviso legal</a>
+              <a href="./cookies.html">Cookies</a>
+              <a href="./accesibilidad.html">Accesibilidad</a>
+            </nav>
+          </div>
+          
+          <!-- Contacto -->
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <nav class="footer-links">
+              <a href="mailto:info@murcianitos.com">info@murcianitos.com</a>
+              <a href="./contacto.html">Contacto</a>
+            </nav>
+          </div>
+
+          <!-- Social -->
+          <div class="footer-col">
+            <h4>Síguenos</h4>
+            <nav class="footer-social-links">
+              <a href="https://www.instagram.com/murcianitos_oficial/" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@murcianitos_oficial" target="_blank" rel="noopener" aria-label="TikTok">
+                <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.1z"/></svg>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61585041083351" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://x.com/murcianitos_ofi" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copyright">© 2026 Murcianitos. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  
+  <script src="./bundle.js"></script>
+</body>
+</html>

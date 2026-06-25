@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Alérgenos | Murcianitos</title>
+  
+  <link rel="stylesheet" href="./src/css/reset.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/base.css">
+  <link rel="stylesheet" href="./src/css/components/header.css">
+  <link rel="stylesheet" href="./src/css/components/footer.css">
+  <link rel="stylesheet" href="./src/css/components/buttons.css">
+  <link rel="stylesheet" href="./src/css/components/hero.css">
+  
+  <style>
+    /* Responsive Visibility Toggles */
+    @media (max-width: 1023px) {
+      .desktop-only { display: none !important; }
+    }
+    @media (min-width: 1024px) {
+      .mobile-only { display: none !important; }
+    }
+
+    /* Info Banner */
+    .allergen-info-banner {
+      background-color: var(--surface-dark);
+      color: var(--color-cream);
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4xl);
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+    
+    .allergen-info-banner .material-symbols-outlined {
+      font-size: 2.5rem;
+      color: var(--color-gold);
+    }
+    
+    .allergen-info-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+      margin: 0;
+    }
+
+    /* --- STYLES FOR DESKTOP (TABLE) --- */
+    .allergen-table-wrapper {
+      overflow-x: auto;
+      background: var(--surface-light);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      margin-top: 0;
+    }
+    
+    .allergen-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      table-layout: fixed;
+    }
+    
+    .allergen-table th, .allergen-table td {
+      padding: var(--space-xs);
+      border: 1px solid rgba(197, 160, 89, 0.2);
+      height: 50px;
+    }
+    
+    .allergen-table th:first-child,
+    .allergen-table td:first-child {
+      width: 16%; 
+    }
+    
+    .allergen-table th {
+      background-color: var(--surface-light);
+      color: var(--color-ink);
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      height: 60px;
+      position: relative;
+    }
+    
+    .allergen-header-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .allergen-header-icon .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .allergen-header-text {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      line-height: 1.2;
+      white-space: nowrap; 
+      z-index: 10; 
+      background-color: var(--surface-light); 
+      padding: 4px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    }
+    
+    .allergen-table th:hover .allergen-header-icon {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    
+    .allergen-table th:hover .allergen-header-text {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .allergen-table td.dish-name {
+      text-align: left;
+      font-family: var(--font-body);
+      color: var(--color-ink);
+      font-weight: 500;
+      font-size: 0.8rem; 
+      background-color: var(--color-cream);
+      padding-left: var(--space-md); 
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .allergen-table tr:nth-child(even) {
+      background-color: var(--color-cream);
+    }
+    
+    .allergen-table tr:nth-child(odd) {
+      background-color: var(--surface-light);
+    }
+    
+    .allergen-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--color-burgundy);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, box-shadow 0.3s ease;
+      vertical-align: middle;
+    }
+    
+    .allergen-table tr:hover .allergen-dot {
+      transform: scale(1.6);
+      background-color: var(--color-gold);
+      box-shadow: 0 0 8px rgba(197, 160, 89, 0.6);
+    }
+    
+    .header-category {
+      background-color: var(--color-ink) !important;
+      color: var(--color-cream) !important;
+      text-align: left;
+      padding-left: var(--space-sm) !important; 
+      font-family: var(--font-headline) !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+    }
+
+    /* --- STYLES FOR MOBILE (CARDS) --- */
+    .allergen-categories {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4xl);
+    }
+    
+    .allergen-category-title {
+      font-family: var(--font-headline);
+      font-size: var(--text-h2);
+      color: var(--color-ink);
+      margin-bottom: var(--space-xl);
+      border-bottom: 2px solid var(--color-gold);
+      padding-bottom: var(--space-sm);
+      display: inline-block;
+    }
+
+    .allergen-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    
+    @media (min-width: 768px) {
+      .allergen-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+      }
+    }
+    
+    .allergen-card {
+      background-color: var(--surface-light);
+      border: 1px solid rgba(197, 160, 89, 0.2);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--duration-normal) var(--ease-smooth), box-shadow var(--duration-normal) var(--ease-smooth);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .allergen-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(197, 160, 89, 0.6);
+    }
+
+    .allergen-product {
+      font-family: var(--font-headline);
+      font-size: 1.5rem;
+      color: var(--color-ink);
+      margin-bottom: var(--space-lg);
+    }
+
+    .allergen-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: auto;
+    }
+
+    .allergen-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--color-cream);
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-family: var(--font-label);
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background-color var(--duration-fast) var(--ease-smooth);
+    }
+    
+    .allergen-tag:hover {
+      background-color: rgba(197, 160, 89, 0.1);
+    }
+
+    .allergen-tag .material-symbols-outlined {
+      font-size: 16px;
+      color: var(--color-gold);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="hero-section hero-center" style="background-color: var(--color-cream); min-height: 35vh; padding-top: calc(var(--space-5xl) + 80px); padding-bottom: var(--space-2xl);">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label">Información de Producto</span>
+        <h1 class="hero-title" style="color: var(--text-primary);">Alérgenos</h1>
+        <p class="hero-desc" style="color: var(--text-secondary);">Consulta detalladamente los ingredientes de nuestra carta.</p>
+      </div>
+    </section>
+
+    <section class="section" style="background-color: var(--surface-light); padding-bottom: var(--space-4xl);">
+      <div class="container">
+        
+        <!-- Info Banner -->
+        <div class="allergen-info-banner" data-reveal="fade-up">
+          <span class="material-symbols-outlined">info</span>
+          <p class="allergen-info-text">
+            <strong>Información importante:</strong> Todos nuestros productos se elaboran artesanalmente en un obrador único. Aunque cuidamos los procesos, <strong>pueden contener trazas de frutos secos</strong> u otros alérgenos cruzados no especificados en la receta original.
+          </p>
+        </div>
+
+        <!-- ============================== -->
+        <!-- VIEW 1: DESKTOP TABLE          -->
+        <!-- ============================== -->
+        <div class="desktop-only" data-reveal="fade-up">
+          <div class="allergen-table-wrapper" style="margin-bottom: 0;">
+            <table class="allergen-table">
+              <thead>
+                <tr>
+                  <th style="text-align: left; vertical-align: top; padding-left: var(--space-md);"></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">bakery_dining</span></div><span class="allergen-header-text">Gluten</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">eco</span></div><span class="allergen-header-text">Frutos<br>Secos</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">set_meal</span></div><span class="allergen-header-text">Crustáceos</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">grass</span></div><span class="allergen-header-text">Cacahuetes</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">science</span></div><span class="allergen-header-text">Sulfitos</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">spa</span></div><span class="allergen-header-text">Soja</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">phishing</span></div><span class="allergen-header-text">Pescado</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">grain</span></div><span class="allergen-header-text">Sésamo</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">water_drop</span></div><span class="allergen-header-text">Mostaza</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">water</span></div><span class="allergen-header-text">Moluscos</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">local_drink</span></div><span class="allergen-header-text">Lácteos</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">egg</span></div><span class="allergen-header-text">Huevos</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">energy_savings_leaf</span></div><span class="allergen-header-text">Apio</span></th>
+                  <th><div class="allergen-header-icon"><span class="material-symbols-outlined">grain</span></div><span class="allergen-header-text">Altramuz</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="15" class="header-category">Murcianitos Salados</td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Clásico</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Pollo y Trufa</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Vegetal</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Queso de Cabra y Cebolla</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Jamón Ibérico</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Morcilla y Piñones</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colspan="15" class="header-category">Murcianitos Dulces</td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Chocolate</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Crema</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Dulce de Leche</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Cabello de Ángel</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Pistacho y Frambuesa</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="dish-name">Limón y Merengue</td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td><div class="allergen-dot"></div></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- VIEW 2: MOBILE CARDS           -->
+        <!-- ============================== -->
+        <div class="mobile-only">
+          <div class="allergen-categories" data-reveal="stagger">
+            
+            <!-- SALADOS -->
+            <div class="allergen-category-block stagger-item">
+              <h2 class="allergen-category-title">Murcianitos Salados</h2>
+              <div class="allergen-grid">
+                
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Clásico</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Pollo y Trufa</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Sulfitos"><span class="material-symbols-outlined">science</span> Sulfitos</div>
+                    <div class="allergen-tag" title="Mostaza"><span class="material-symbols-outlined">water_drop</span> Mostaza</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Vegetal</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Frutos Secos"><span class="material-symbols-outlined">eco</span> Frutos Secos</div>
+                    <div class="allergen-tag" title="Apio"><span class="material-symbols-outlined">energy_savings_leaf</span> Apio</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Queso de Cabra y Cebolla</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Frutos Secos"><span class="material-symbols-outlined">eco</span> Frutos Secos</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Jamón Ibérico</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Morcilla y Piñones</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Frutos Secos"><span class="material-symbols-outlined">eco</span> Frutos Secos</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- DULCES -->
+            <div class="allergen-category-block stagger-item">
+              <h2 class="allergen-category-title">Murcianitos Dulces</h2>
+              <div class="allergen-grid">
+                
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Chocolate</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Frutos Secos"><span class="material-symbols-outlined">eco</span> Frutos Secos</div>
+                    <div class="allergen-tag" title="Cacahuetes"><span class="material-symbols-outlined">grass</span> Cacahuetes</div>
+                    <div class="allergen-tag" title="Soja"><span class="material-symbols-outlined">spa</span> Soja</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Crema</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Dulce de Leche</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Cabello de Ángel</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Pistacho y Frambuesa</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Frutos Secos"><span class="material-symbols-outlined">eco</span> Frutos Secos</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+                <div class="allergen-card">
+                  <h3 class="allergen-product">Limón y Merengue</h3>
+                  <div class="allergen-tags">
+                    <div class="allergen-tag" title="Gluten"><span class="material-symbols-outlined">bakery_dining</span> Gluten</div>
+                    <div class="allergen-tag" title="Lácteos"><span class="material-symbols-outlined">local_drink</span> Lácteos</div>
+                    <div class="allergen-tag" title="Huevos"><span class="material-symbols-outlined">egg</span> Huevos</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>

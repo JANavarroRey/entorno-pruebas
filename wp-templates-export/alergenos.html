@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Alérgenos | Murcianitos</title>
+  
+  <link rel="stylesheet" href="./src/css/reset.css">
+  <link rel="stylesheet" href="./src/css/tokens.css">
+  <link rel="stylesheet" href="./src/css/base.css">
+  <link rel="stylesheet" href="./src/css/components/header.css">
+  <link rel="stylesheet" href="./src/css/components/footer.css">
+  <link rel="stylesheet" href="./src/css/components/buttons.css">
+  <link rel="stylesheet" href="./src/css/components/hero.css">
+  
+  <style>
+    .allergen-table-wrapper {
+      overflow-x: auto;
+      background: var(--surface-light);
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      margin-top: 0; /* Reduced margin */
+    }
+    
+    .allergen-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      table-layout: fixed;
+    }
+    
+    .allergen-table th, .allergen-table td {
+      padding: var(--space-xs);
+      border: 1px solid rgba(197, 160, 89, 0.2);
+      height: 50px;
+    }
+    
+    .allergen-table th:first-child,
+    .allergen-table td:first-child {
+      width: 16%; /* Narrower product column, wider allergen columns */
+    }
+    
+    .allergen-table th {
+      background-color: var(--surface-light);
+      color: var(--color-ink);
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      height: 60px;
+      position: relative;
+    }
+    
+    .allergen-header-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .allergen-header-icon .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .allergen-header-text {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      line-height: 1.2;
+      white-space: nowrap; /* Prevent text from wrapping/cutting */
+      z-index: 10; /* Ensure it stays above adjacent cells */
+      background-color: var(--surface-light); /* Give it a background so it's readable if it overflows */
+      padding: 4px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for the popout effect */
+    }
+    
+    .allergen-table th:hover .allergen-header-icon {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    
+    .allergen-table th:hover .allergen-header-text {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .allergen-table td.dish-name {
+      text-align: left;
+      font-family: var(--font-body);
+      color: var(--color-ink);
+      font-weight: 500;
+      font-size: 0.8rem; /* Smaller font size */
+      background-color: var(--color-cream);
+      padding-left: var(--space-md); /* Reduced indent */
+      white-space: nowrap; /* Force single line */
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .allergen-table tr:nth-child(even) {
+      background-color: var(--color-cream);
+    }
+    
+    .allergen-table tr:nth-child(odd) {
+      background-color: var(--surface-light);
+    }
+    
+    .allergen-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--color-burgundy);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, box-shadow 0.3s ease;
+      vertical-align: middle;
+    }
+    
+    .allergen-table tr:hover .allergen-dot {
+      transform: scale(1.6);
+      background-color: var(--color-gold);
+      box-shadow: 0 0 8px rgba(197, 160, 89, 0.6);
+    }
+    
+    .header-category {
+      background-color: var(--color-ink) !important;
+      color: var(--color-cream) !important;
+      text-align: left;
+      padding-left: var(--space-sm) !important; /* Reduced indent for category */
+      font-family: var(--font-headline) !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+    }
+  </style>
+</head>
+<body>
+
+  
+    <header class="site-header is-light-theme">
+      <div class="container header-container">
+        <!-- Mobile Toggle -->
+        <button class="mobile-toggle" aria-label="Abrir menú" style="z-index: 2; position: relative;">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <!-- Desktop Nav Left -->
+        <nav class="header-nav-left">
+          <a href="./index.html" class="nav-link ">Inicio</a>
+          <a href="./nuestra-historia.html" class="nav-link ">Historia</a>
+          <a href="./carta.html" class="nav-link ${currentPath.includes('carta') ? 'active' : ''}">Carta</a>
+        </nav>
+
+        <!-- Center Logo -->
+        <a href="./index.html" class="header-logo" style="z-index: 2; position: relative;">
+          <img src="./src/assets/icono-blanco.png" alt="Murcianitos" class="logo-light" />
+          <img src="./src/assets/icono-negro.png" alt="Murcianitos" class="logo-dark" />
+        </a>
+
+        <!-- Desktop Nav Right -->
+        <nav class="header-nav-right">
+          <a href="./eventos.html" class="nav-link ">Eventos</a>
+          <a href="./blog.html" class="nav-link ">Blog</a>
+          <a href="./pedir-ahora.html" class="btn btn-primary" style="margin-left: var(--space-md);">Pedir Ahora</a>
+        </nav>
+
+        <!-- Mobile CTA -->
+        <div class="mobile-cta" style="z-index: 2; position: relative;">
+          <a href="./pedir-ahora.html" class="btn" style="border: 1px solid rgba(197, 160, 89, 0.5); color: var(--color-gold); background: transparent; padding: 6px 14px; font-size: 0.75rem; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.1em; border-radius: 4px;">Pedir</a>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay">
+          <nav class="mobile-nav">
+            <a href="./index.html" class="nav-link ">Inicio</a>
+            <a href="./nuestra-historia.html" class="nav-link ">Historia</a>
+            <a href="./carta.html" class="nav-link ${currentPath.includes('carta') ? 'active' : ''}">Carta</a>
+            <a href="./eventos.html" class="nav-link ">Eventos</a>
+            <a href="./blog.html" class="nav-link ">Blog</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+  
+
+  <main>
+    <section class="hero-section hero-center" style="background-color: var(--color-cream); min-height: 40vh; padding-top: calc(var(--space-5xl) + 80px); padding-bottom: var(--space-2xl);">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label">Información</span>
+        <h1 class="hero-title" style="color: var(--text-primary);">Tabla de Alérgenos</h1>
+        <p class="hero-desc" style="color: var(--text-secondary);">Consulta los alérgenos de todos nuestros productos.</p>
+      </div>
+    </section>
+
+    <section class="section" style="background-color: var(--surface-light); padding-bottom: var(--space-2xl);">
+      <div class="container">
+        <div class="allergen-table-wrapper" data-reveal="fade-up" style="margin-bottom: 0;">
+          <table class="allergen-table">
+            <thead>
+              <tr>
+                <th style="text-align: left; vertical-align: top; padding-left: var(--space-md);"></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">bakery_dining</span></div><span class="allergen-header-text">Gluten</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">eco</span></div><span class="allergen-header-text">Frutos<br>Secos</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">set_meal</span></div><span class="allergen-header-text">Crustáceos</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">grass</span></div><span class="allergen-header-text">Cacahuetes</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">science</span></div><span class="allergen-header-text">Sulfitos</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">spa</span></div><span class="allergen-header-text">Soja</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">phishing</span></div><span class="allergen-header-text">Pescado</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">grain</span></div><span class="allergen-header-text">Sésamo</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">water_drop</span></div><span class="allergen-header-text">Mostaza</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">water</span></div><span class="allergen-header-text">Moluscos</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">local_drink</span></div><span class="allergen-header-text">Lácteos</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">egg</span></div><span class="allergen-header-text">Huevos</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">energy_savings_leaf</span></div><span class="allergen-header-text">Apio</span></th>
+                <th><div class="allergen-header-icon"><span class="material-symbols-outlined">grain</span></div><span class="allergen-header-text">Altramuz</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="15" class="header-category">Murcianitos Salados</td>
+              </tr>
+              <tr>
+                <td class="dish-name">Clásico</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Pollo y Trufa</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Vegetal</td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Queso de Cabra y Cebolla</td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Jamón Ibérico</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Morcilla y Piñones</td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="15" class="header-category">Murcianitos Dulces</td>
+              </tr>
+              <tr>
+                <td class="dish-name">Chocolate</td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Crema</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Dulce de Leche</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Cabello de Ángel</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Pistacho y Frambuesa</td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="dish-name">Limón y Merengue</td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><div class="allergen-dot"></div></td>
+                <td><div class="allergen-dot"></div></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Brand -->
+          <div class="footer-brand">
+            <img src="./src/assets/logo-blanco.png" alt="Murcianitos" class="footer-logo" />
+          </div>
+
+          <!-- Explorar -->
+          <div class="footer-col">
+            <h4>Explorar</h4>
+            <nav class="footer-links">
+              <a href="./carta.html">Carta</a>
+              <a href="./nuestra-historia.html">Historia</a>
+              <a href="./eventos.html">Eventos</a>
+              <a href="./blog.html">Blog</a>
+              <a href="./faq.html">FAQ</a>
+            </nav>
+          </div>
+
+          <!-- Legal -->
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <nav class="footer-links">
+              <a href="./privacidad.html">Privacidad</a>
+              <a href="./aviso-legal.html">Aviso legal</a>
+              <a href="./cookies.html">Cookies</a>
+              <a href="./accesibilidad.html">Accesibilidad</a>
+            </nav>
+          </div>
+          
+          <!-- Contacto -->
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <nav class="footer-links">
+              <a href="mailto:info@murcianitos.com">info@murcianitos.com</a>
+              <a href="./contacto.html">Contacto</a>
+            </nav>
+          </div>
+
+          <!-- Social -->
+          <div class="footer-col">
+            <h4>Síguenos</h4>
+            <nav class="footer-social-links">
+              <a href="https://www.instagram.com/murcianitos_oficial/" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@murcianitos_oficial" target="_blank" rel="noopener" aria-label="TikTok">
+                <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.1z"/></svg>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61585041083351" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://x.com/murcianitos_ofi" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copyright">© 2026 Murcianitos. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  
+  <script src="./bundle.js"></script>
+</body>
+</html>

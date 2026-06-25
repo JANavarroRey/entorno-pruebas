@@ -2,29 +2,24 @@ import '../../css/components/accessibility.css';
 
 export class AccessibilityWidget {
   constructor() {
-    this.state = JSON.parse(localStorage.getItem('murcianitos_acc')) || {
-      cursorBlack: false,
-      cursorWhite: false,
-      stopAnimations: false,
-      dyslexiaFont: false,
-      legibleFont: false,
-      highlightTitles: false,
-      highlightLinks: false,
-      hideImages: false,
-      focusMask: false,
-      readingGuide: false,
-      keyboardNav: false,
-      grayscale: false,
-      invert: false,
-      highContrast: false,
-      fontSize: 1,
-      letterSpacing: 0,
-      lineHeight: 1.5,
-      wordSpacing: 0,
-      contrastVal: 100,
-      saturateVal: 100,
-      brightnessVal: 100
+    const defaults = {
+      cursorBlack: false, cursorWhite: false, stopAnimations: false, muteSounds: false,
+      dyslexiaFont: false, legibleFont: false, easyReading: false, readingMode: false, highlightTitles: false,
+      highlightLinks: false, hideImages: false, focusMask: false, dictionary: false, textAlign: false,
+      readingGuide: false, keyboardNav: false, smartNav: false,
+      descWindows: false, screenReader: false, zoomNav: false,
+      grayscale: false, invert: false, highContrast: false, lowBrightness: false, scaleText: false, fontSize: 1, letterSpacing: 0,
+      lineHeight: 1.5, wordSpacing: 0, contrastVal: 100, saturateVal: 100, brightnessVal: 100,
+      deuteranopia: false, deuteranomalia: false, protanopia: false,
+      tritanopia: false, tritanomalia: false, acromatopsia: false
     };
+    
+    let saved = null;
+    try {
+      saved = JSON.parse(localStorage.getItem('murcianitos_acc'));
+    } catch (e) {}
+
+    this.state = { ...defaults, ...(saved || {}) };
     
     this.init();
   }
@@ -331,40 +326,40 @@ export class AccessibilityWidget {
     const s = this.state;
     
     // Toggle Classes
-    b.classList.toggle('acc-cursor-black', s.cursorBlack);
-    b.classList.toggle('acc-cursor-white', s.cursorWhite);
-    b.classList.toggle('acc-stop-animations', s.stopAnimations);
-    b.classList.toggle('acc-font-dyslexia', s.dyslexiaFont);
-    b.classList.toggle('acc-font-legible', s.legibleFont);
-    b.classList.toggle('acc-highlight-titles', s.highlightTitles);
-    b.classList.toggle('acc-highlight-links', s.highlightLinks);
-    b.classList.toggle('acc-hide-images', s.hideImages);
-    b.classList.toggle('acc-focus-active', s.focusMask);
-    b.classList.toggle('acc-reading-guide-active', s.readingGuide);
-    b.classList.toggle('acc-keyboard-nav', s.keyboardNav);
-    b.classList.toggle('acc-smart-nav', s.smartNav);
-    b.classList.toggle('acc-zoom-nav', s.zoomNav);
-    b.classList.toggle('acc-filter-grayscale', s.grayscale);
-    b.classList.toggle('acc-filter-invert', s.invert);
-    b.classList.toggle('acc-filter-high-contrast', s.highContrast);
-    b.classList.toggle('acc-low-brightness', s.lowBrightness);
-    b.classList.toggle('acc-text-large', s.scaleText);
-    b.classList.toggle('acc-align-left', s.textAlign);
-    b.classList.toggle('acc-easy-reading', s.easyReading);
+    b.classList.toggle('acc-cursor-black', !!s.cursorBlack);
+    b.classList.toggle('acc-cursor-white', !!s.cursorWhite);
+    b.classList.toggle('acc-stop-animations', !!s.stopAnimations);
+    b.classList.toggle('acc-font-dyslexia', !!s.dyslexiaFont);
+    b.classList.toggle('acc-font-legible', !!s.legibleFont);
+    b.classList.toggle('acc-highlight-titles', !!s.highlightTitles);
+    b.classList.toggle('acc-highlight-links', !!s.highlightLinks);
+    b.classList.toggle('acc-hide-images', !!s.hideImages);
+    b.classList.toggle('acc-focus-active', !!s.focusMask);
+    b.classList.toggle('acc-reading-guide-active', !!s.readingGuide);
+    b.classList.toggle('acc-keyboard-nav', !!s.keyboardNav);
+    b.classList.toggle('acc-smart-nav', !!s.smartNav);
+    b.classList.toggle('acc-zoom-nav', !!s.zoomNav);
+    b.classList.toggle('acc-filter-grayscale', !!s.grayscale);
+    b.classList.toggle('acc-filter-invert', !!s.invert);
+    b.classList.toggle('acc-filter-high-contrast', !!s.highContrast);
+    b.classList.toggle('acc-low-brightness', !!s.lowBrightness);
+    b.classList.toggle('acc-text-large', !!s.scaleText);
+    b.classList.toggle('acc-align-left', !!s.textAlign);
+    b.classList.toggle('acc-easy-reading', !!s.easyReading);
 
-    this.toggleMuteSounds(s.muteSounds);
-    this.toggleReadingMode(s.readingMode);
-    this.toggleDictionary(s.dictionary);
-    this.toggleDescWindows(s.descWindows);
-    this.toggleScreenReader(s.screenReader);
+    this.toggleMuteSounds(!!s.muteSounds);
+    this.toggleReadingMode(!!s.readingMode);
+    this.toggleDictionary(!!s.dictionary);
+    this.toggleDescWindows(!!s.descWindows);
+    this.toggleScreenReader(!!s.screenReader);
 
     // Daltonismo CSS classes
-    b.classList.toggle('acc-deuteranopia', s.deuteranopia);
-    b.classList.toggle('acc-deuteranomalia', s.deuteranomalia);
-    b.classList.toggle('acc-protanopia', s.protanopia);
-    b.classList.toggle('acc-tritanopia', s.tritanopia);
-    b.classList.toggle('acc-tritanomalia', s.tritanomalia);
-    b.classList.toggle('acc-acromatopsia', s.acromatopsia);
+    b.classList.toggle('acc-deuteranopia', !!s.deuteranopia);
+    b.classList.toggle('acc-deuteranomalia', !!s.deuteranomalia);
+    b.classList.toggle('acc-protanopia', !!s.protanopia);
+    b.classList.toggle('acc-tritanopia', !!s.tritanopia);
+    b.classList.toggle('acc-tritanomalia', !!s.tritanomalia);
+    b.classList.toggle('acc-acromatopsia', !!s.acromatopsia);
 
     // Stop GSAP animations
     if (typeof window !== 'undefined' && window.gsap) {

@@ -162,9 +162,9 @@ export function initPedirAhora() {
         state.itemsArray.forEach(item => {
           const itemTotal = (item.price * item.quantity).toFixed(2).replace('.', ',');
           checkoutItemsList.innerHTML += `
-            <div style="display: flex; justify-content: space-between;">
-              <span>${item.quantity}x ${item.title}</span>
-              <span>${itemTotal} €</span>
+            <div style="display: flex; justify-content: space-between; gap: 16px; align-items: flex-start;">
+              <span style="flex: 1; line-height: 1.4;">${item.quantity}x ${item.title}</span>
+              <span style="flex-shrink: 0; white-space: nowrap; font-weight: 500;">${itemTotal} €</span>
             </div>
           `;
         });

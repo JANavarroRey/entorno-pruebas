@@ -60,7 +60,7 @@
       color: var(--color-gold);
     }
     
-    .faq-icon {
+      .faq-icon {
       font-size: 1.5rem;
       color: var(--color-gold);
       transition: all var(--duration-normal) var(--ease-smooth);
@@ -72,11 +72,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
     }
     
     .faq-question:hover .faq-icon {
       background: var(--color-gold);
       color: white;
+    }
+
+    .faq-question span:first-child {
+      padding-right: var(--space-md);
+      line-height: 1.4;
     }
     
     .faq-answer {
@@ -103,7 +109,7 @@
     
     @media (max-width: 768px) {
       .faq-layout {
-        padding: var(--space-xl) var(--space-sm) var(--space-3xl);
+        padding: var(--space-xl) var(--space-sm) 120px;
       }
       .faq-question {
         padding: var(--space-md) var(--space-lg);

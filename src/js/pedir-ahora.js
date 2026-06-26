@@ -157,14 +157,14 @@ export function initPedirAhora() {
       
       checkoutItemsList.innerHTML = '';
       if (state.itemsArray.length === 0) {
-        checkoutItemsList.innerHTML = '<div style="padding: 4px 0;">Tu cesta está vacía.</div>';
+        checkoutItemsList.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.9rem; text-align: center; padding: var(--space-md) 0;">Tu cesta está vacía.</div>';
       } else {
         state.itemsArray.forEach(item => {
           const itemTotal = (item.price * item.quantity).toFixed(2).replace('.', ',');
           checkoutItemsList.innerHTML += `
-            <div style="display: flex; justify-content: space-between; gap: 16px; align-items: flex-start;">
-              <span style="flex: 1; line-height: 1.4;">${item.quantity}x ${item.title}</span>
-              <span style="flex-shrink: 0; white-space: nowrap; font-weight: 500;">${itemTotal} €</span>
+            <div class="cart-item-mini">
+              <span>${item.quantity}x ${item.title}</span>
+              <span>${itemTotal}€</span>
             </div>
           `;
         });

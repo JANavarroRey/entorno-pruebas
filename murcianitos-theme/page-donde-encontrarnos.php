@@ -1,0 +1,166 @@
+<?php
+/**
+ * Template Name: Donde Encontrarnos
+ */
+if (!defined('ABSPATH')) exit;
+
+get_header();
+?>
+
+<style>
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      padding: var(--space-4xl) 0;
+    }
+    @media (min-width: 768px) {
+      .locations-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .location-card {
+      background-color: var(--surface-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .location-title {
+      font-family: var(--font-headline);
+      font-size: var(--text-h3);
+      color: var(--color-ink);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .location-address {
+      display: flex;
+      gap: var(--space-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-lg);
+      align-items: flex-start;
+    }
+    
+    .location-hours {
+      background-color: var(--color-cream-dark);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--text-body-sm);
+      margin-bottom: var(--space-xs);
+    }
+    .hours-row:last-child {
+      margin-bottom: 0;
+    }
+    
+    .delivery-section {
+      background-color: var(--surface-dark);
+      color: var(--color-cream);
+      padding: var(--space-5xl) 0;
+      text-align: center;
+    }
+    
+    .delivery-apps {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      margin-top: var(--space-2xl);
+      flex-wrap: wrap;
+    }
+    .delivery-app {
+      background-color: var(--color-white);
+      color: var(--color-ink);
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  
+</style>
+
+<main>
+
+    <section class="hero-section hero-center" style="min-height: 40vh;">
+      <div class="container" data-reveal="fade-up">
+        <h1 class="hero-title">Nuestros Obradores</h1>
+        <p class="hero-desc">Ven a visitarnos y disfruta del hojaldre recién horneado.</p>
+      </div>
+    </section>
+
+    <!-- Tiendas Físicas -->
+    <section class="section">
+      <div class="container locations-grid" data-reveal="stagger">
+        
+        <div class="location-card stagger-item">
+          <h2 class="location-title">Murcia Centro (Original)</h2>
+          <div class="location-address">
+            <span class="material-symbols-outlined">location_on</span>
+            <p>Calle Mayor 12<br>30001 Murcia</p>
+          </div>
+          <div class="location-hours">
+            <div class="hours-row">
+              <strong>Lunes - Sábado</strong>
+              <span>09:00 - 21:00</span>
+            </div>
+            <div class="hours-row">
+              <strong>Domingos y Festivos</strong>
+              <span>10:00 - 15:00</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-secondary" style="width: 100%;">Cómo Llegar</a>
+        </div>
+
+        <div class="location-card stagger-item">
+          <h2 class="location-title">Madrid (Pop-up)</h2>
+          <div class="location-address">
+            <span class="material-symbols-outlined">location_on</span>
+            <p>Mercado de San Miguel<br>Plaza de San Miguel, s/n<br>28005 Madrid</p>
+          </div>
+          <div class="location-hours">
+            <div class="hours-row">
+              <strong>Lunes - Domingo</strong>
+              <span>10:00 - 24:00</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-secondary" style="width: 100%;">Cómo Llegar</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Delivery -->
+    <section class="delivery-section" data-reveal="fade-up">
+      <div class="container">
+        <h2 style="color: var(--color-cream);">También a domicilio</h2>
+        <p style="color: var(--text-on-dark-muted); max-width: 600px; margin: 0 auto;">Si vives en Murcia o Madrid ciudad, puedes pedir tus Murcianitos calientes a través de las principales plataformas de delivery.</p>
+        
+        <div class="delivery-apps">
+          <div class="delivery-app">
+            <span class="material-symbols-outlined">two_wheeler</span>
+            Glovo
+          </div>
+          <div class="delivery-app">
+            <span class="material-symbols-outlined">two_wheeler</span>
+            Uber Eats
+          </div>
+          <div class="delivery-app">
+            <span class="material-symbols-outlined">two_wheeler</span>
+            Just Eat
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+</main>
+
+
+<?php get_footer(); ?>

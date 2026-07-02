@@ -275,70 +275,70 @@ body.acc-hide-images svg:not(.material-symbols-outlined) {
   visibility: hidden !important;
 }
 
-/* --- Contraste / Daltonismo --- */
+/* --- Contraste / Daltonismo (Uso de filter nativo sobre elementos base) --- */
 .acc-backdrop-filter-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9996;
-  display: none;
+  display: none !important;
 }
-body.acc-filter-grayscale .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: grayscale(100%);
-  -webkit-backdrop-filter: grayscale(100%);
+
+/* Grayscale */
+body.acc-filter-grayscale header.site-header,
+body.acc-filter-grayscale main,
+body.acc-filter-grayscale footer.site-footer {
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
 }
-body.acc-filter-invert .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: invert(100%) hue-rotate(180deg);
-  -webkit-backdrop-filter: invert(100%) hue-rotate(180deg);
-  background-color: rgba(0, 0, 0, 0.8);
+
+/* Invert */
+body.acc-filter-invert header.site-header,
+body.acc-filter-invert main,
+body.acc-filter-invert footer.site-footer {
+  filter: invert(100%) hue-rotate(180deg) !important;
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
 }
-body.acc-filter-high-contrast .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: contrast(150%);
-  -webkit-backdrop-filter: contrast(150%);
+body.acc-filter-invert {
+  background-color: #000;
 }
-body.acc-low-brightness .acc-backdrop-filter-layer {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: brightness(60%);
-  -webkit-backdrop-filter: brightness(60%);
+
+/* High Contrast */
+body.acc-filter-high-contrast header.site-header,
+body.acc-filter-high-contrast main,
+body.acc-filter-high-contrast footer.site-footer {
+  filter: contrast(150%) !important;
+  -webkit-filter: contrast(150%) !important;
+}
+
+/* Low Brightness */
+body.acc-low-brightness header.site-header,
+body.acc-low-brightness main,
+body.acc-low-brightness footer.site-footer {
+  filter: brightness(60%) !important;
+  -webkit-filter: brightness(60%) !important;
 }
 
 /* --- Daltonismo Filters --- */
-body.acc-deuteranopia .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: url(#acc-deuteranopia);
-  -webkit-backdrop-filter: url(#acc-deuteranopia);
+body.acc-deuteranopia header.site-header, body.acc-deuteranopia main, body.acc-deuteranopia footer.site-footer {
+  filter: url(#acc-deuteranopia) !important;
+  -webkit-filter: url(#acc-deuteranopia) !important;
 }
-body.acc-deuteranomalia .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: url(#acc-deuteranomalia);
-  -webkit-backdrop-filter: url(#acc-deuteranomalia);
+body.acc-deuteranomalia header.site-header, body.acc-deuteranomalia main, body.acc-deuteranomalia footer.site-footer {
+  filter: url(#acc-deuteranomalia) !important;
+  -webkit-filter: url(#acc-deuteranomalia) !important;
 }
-body.acc-protanopia .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: url(#acc-protanopia);
-  -webkit-backdrop-filter: url(#acc-protanopia);
+body.acc-protanopia header.site-header, body.acc-protanopia main, body.acc-protanopia footer.site-footer {
+  filter: url(#acc-protanopia) !important;
+  -webkit-filter: url(#acc-protanopia) !important;
 }
-body.acc-tritanopia .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: url(#acc-tritanopia);
-  -webkit-backdrop-filter: url(#acc-tritanopia);
+body.acc-tritanopia header.site-header, body.acc-tritanopia main, body.acc-tritanopia footer.site-footer {
+  filter: url(#acc-tritanopia) !important;
+  -webkit-filter: url(#acc-tritanopia) !important;
 }
-body.acc-tritanomalia .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: url(#acc-tritanomalia);
-  -webkit-backdrop-filter: url(#acc-tritanomalia);
+body.acc-tritanomalia header.site-header, body.acc-tritanomalia main, body.acc-tritanomalia footer.site-footer {
+  filter: url(#acc-tritanomalia) !important;
+  -webkit-filter: url(#acc-tritanomalia) !important;
 }
-body.acc-acromatopsia .acc-backdrop-filter-layer {
-  display: block;
-  backdrop-filter: url(#acc-acromatopsia);
-  -webkit-backdrop-filter: url(#acc-acromatopsia);
+body.acc-acromatopsia header.site-header, body.acc-acromatopsia main, body.acc-acromatopsia footer.site-footer {
+  filter: url(#acc-acromatopsia) !important;
+  -webkit-filter: url(#acc-acromatopsia) !important;
 }
 
 /* SVG Filters (Deuteranopia, Protanopia, Tritanopia) applied dynamically via JS to style */

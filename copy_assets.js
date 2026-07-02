@@ -4,9 +4,9 @@ const path = require('path');
 const dest = 'c:\\Murcianitos\\web-redesign\\src\\assets\\';
 
 const files = [
-  'c:\\Murcianitos\\Contexto\\Identidad digital\\Pruebas contenido\\MOCKUPS LOGO\\Metro.png',
-  'c:\\Murcianitos\\Contexto\\Identidad digital\\Pruebas contenido\\MOCKUPS LOGO\\Cartel gigante.png',
-  'c:\\Murcianitos\\Contexto\\Identidad digital\\Pruebas contenido\\MOCKUPS LOGO\\Lona 2.png'
+  'c:\\Murcianitos\\Contexto\\Identidad digital\\Pruebas contenido\\MOCKUPS LOGO\\metro.webp',
+  'c:\\Murcianitos\\Contexto\\Identidad digital\\Pruebas contenido\\MOCKUPS LOGO\\cartel-gigante.webp',
+  'c:\\Murcianitos\\Contexto\\Identidad digital\\Pruebas contenido\\MOCKUPS LOGO\\lona-2.webp'
 ];
 
 files.forEach(f => {

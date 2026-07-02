@@ -1,0 +1,117 @@
+<?php
+/**
+ * Template Name: Blog Secreto Hojaldre
+ */
+if (!defined('ABSPATH')) exit;
+
+get_header();
+?>
+
+<style>
+
+    .post-hero {
+      padding-top: 150px;
+      padding-bottom: 0;
+      background-color: var(--surface-light);
+      text-align: center;
+    }
+    .post-meta {
+      font-family: var(--font-label);
+      color: var(--color-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-md);
+      font-weight: 600;
+    }
+    .post-title {
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 8vw, 4rem);
+      color: var(--color-ink);
+      max-width: 100%;
+      margin: 0 auto var(--space-3xl);
+      line-height: 1.1;
+      white-space: normal;
+    }
+    .post-image-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .post-image {
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .post-content {
+      max-width: 700px;
+      margin: var(--space-3xl) auto;
+      padding: 0 var(--space-xl);
+      font-size: var(--text-body-lg);
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+    .post-content h2 {
+      font-family: var(--font-headline);
+      font-size: var(--text-h2);
+      margin-top: var(--space-3xl);
+      margin-bottom: var(--space-md);
+      color: var(--color-ink);
+    }
+    .post-content p {
+      margin-bottom: var(--space-lg);
+    }
+    .post-content blockquote {
+      font-family: var(--font-headline);
+      font-size: var(--text-h3);
+      color: var(--color-gold);
+      border-left: 4px solid var(--color-gold);
+      padding-left: var(--space-lg);
+      margin: var(--space-2xl) 0;
+      line-height: 1.4;
+    }
+    .back-btn-container {
+      text-align: center;
+      margin-bottom: var(--space-5xl);
+    }
+  
+</style>
+
+<main>
+
+    <article>
+      <header class="post-hero">
+        <div class="container">
+          <div class="post-meta" data-reveal="fade-up">Historia &bull; 12 Mayo 2026</div>
+          <h1 class="post-title" data-reveal="fade-up" data-reveal-delay="100">El secreto de nuestro hojaldre</h1>
+          <div class="post-image-container" data-reveal="fade-up" data-reveal-delay="200">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1600&auto=format&fit=crop" alt="El secreto de nuestro hojaldre" class="post-image">
+          </div>
+        </div>
+      </header>
+
+      <div class="post-content" data-reveal="fade-up">
+        <p><strong>El tradicional pastel de carne murciano tiene una historia y un proceso que van mucho más allá de lo que vemos a simple vista. En Murcianitos nos tomamos muy en serio la herencia de nuestra región, y por eso hemos documentado todo nuestro proceso creativo y técnico.</strong></p>
+        
+        <h2>El respeto por el proceso</h2>
+        <p>El uso de ingredientes seleccionados no es una opción, es una obligación cuando intentas mantener viva una receta de 1695. Cada elemento de nuestro Murcianito ha sido meticulosamente evaluado.</p>
+        
+        <blockquote>"La clave de un buen Murcianito no está solo en los ingredientes, sino en las manos que amasan el hojaldre cada madrugada antes de que salga el sol."</blockquote>
+        
+        <p>El relleno, por su parte, sigue una mezcla exacta que permite que cada bocado mantenga la jugosidad tradicional, envuelto en una capa de hojaldre que cruje con la delicadeza esperada por los paladares más exigentes.</p>
+        
+        <h2>Mirando al futuro sin olvidar el pasado</h2>
+        <p>Sabemos que la tradición debe evolucionar para no morir. Por eso, hemos modernizado nuestros métodos de cocción garantizando una temperatura constante, pero el sellado sigue realizándose completamente a mano.</p>
+      </div>
+
+      <div class="back-btn-container" data-reveal="fade-up">
+        <a href="./blog.html" class="btn btn-secondary" style="min-width: 250px;">VOLVER AL BLOG</a>
+      </div>
+    </article>
+  
+</main>
+
+<?php get_footer(); ?>

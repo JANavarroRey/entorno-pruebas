@@ -9,9 +9,9 @@ const src1 = "C:\\Users\\joseantonio.navarro\\.gemini\\antigravity-ide\\brain\\c
 const src2 = "C:\\Users\\joseantonio.navarro\\.gemini\\antigravity-ide\\brain\\c667ebcb-0663-42d4-8651-9c529916c9e2\\pack_6_box_1781704129791.png";
 const src3 = "C:\\Users\\joseantonio.navarro\\.gemini\\antigravity-ide\\brain\\c667ebcb-0663-42d4-8651-9c529916c9e2\\pack_12_box_1781704142465.png";
 
-const dest1 = path.join(__dirname, 'src', 'assets', 'pack_3_box.png');
-const dest2 = path.join(__dirname, 'src', 'assets', 'pack_6_box.png');
-const dest3 = path.join(__dirname, 'src', 'assets', 'pack_12_box.png');
+const dest1 = path.join(__dirname, 'src', 'assets', 'pack3box.webp');
+const dest2 = path.join(__dirname, 'src', 'assets', 'pack6box.webp');
+const dest3 = path.join(__dirname, 'src', 'assets', 'pack12box.webp');
 
 async function copy() {
   try {

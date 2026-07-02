@@ -1,0 +1,267 @@
+<?php
+/**
+ * Template Name: Carta
+ */
+if (!defined('ABSPATH')) exit;
+
+get_header();
+?>
+
+<style>
+
+    .menu-category {
+      padding: var(--space-2xl) 0;
+    }
+    .category-header {
+      margin-bottom: var(--space-xl);
+      text-align: center;
+    }
+    
+    @media (min-width: 768px) {
+      .menu-category {
+        padding: var(--space-4xl) 0;
+      }
+      .category-header {
+        margin-bottom: var(--space-2xl);
+      }
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-xl);
+    }
+  
+</style>
+
+<main>
+
+    <section class="hero-section hero-center hero-menu-padding" style="background-color: var(--color-cream); min-height: 40vh;">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label">Nuestro Catálogo</span>
+        <h1 class="hero-title" style="color: var(--text-primary);">El Arte del Hojaldre</h1>
+        <p class="hero-desc" style="color: var(--text-secondary);">Desde la receta original de 1695 a nuestras nuevas creaciones.</p>
+      </div>
+    </section>
+
+    <!-- Individuales Salados -->
+    <section class="menu-category theme-dark" id="salados" style="background-color: var(--surface-dark);">
+      <div class="container">
+        <div class="category-header" data-reveal="fade-up">
+          <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Tradición e Innovación</span>
+          <h2 style="color: var(--color-cream); margin: var(--space-sm) 0;">Individuales Salados</h2>
+          <p style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-on-dark-muted); margin-top: var(--space-xs);">Nuestros clásicos y nuevas creaciones</p>
+        </div>
+        <div class="products-grid" data-reveal="stagger">
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3804.webp" alt="Murcianito Clásico" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Clásico</h3>
+              <p class="card-desc">Ternera especiada, chorizo, huevo duro y el hojaldre perfecto.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-burgundy">Nuevo</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3798.webp" alt="Murcianito Ibérico" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Ibérico</h3>
+              <p class="card-desc">Cerdo ibérico con toque de Pimentón de la Vera.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3826.webp" alt="Murcianito Trufado" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Trufado</h3>
+              <p class="card-desc">Ternera con crema de boletus y trufa negra.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Edición Cuaresma" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Edición "Cuaresma"</h3>
+              <p class="card-desc">Bacalao, tomate frito artesano y pimientos asados.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3804.webp" alt="Murcianito Queso de Cabra" class="card-image" style="filter: contrast(1.1);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Cabra</h3>
+              <p class="card-desc">Ternera, cebolla caramelizada y queso de cabra fundido.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Vegano</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3798.webp" alt="Murcianito Vegano" class="card-image" style="filter: saturate(1.2);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Vegano</h3>
+              <p class="card-desc">Heura especiada, verduras asadas y hojaldre 100% vegetal.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Individuales Dulces -->
+    <section class="menu-category" id="dulces" style="background-color: var(--color-cream);">
+      <div class="container">
+        <div class="category-header" data-reveal="fade-up">
+          <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Para los más golosos</span>
+          <h2 style="margin: var(--space-sm) 0;">Individuales Dulces</h2>
+          <p style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-secondary); margin-top: var(--space-xs);">El contraste perfecto para terminar</p>
+        </div>
+        <div class="products-grid" data-reveal="stagger">
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Murcianito Chocolate" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Chocolate</h3>
+              <p class="card-desc">Hojaldre relleno de crema de chocolate belga y avellanas.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Murcianito Cabello de Ángel" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Cabello de Ángel</h3>
+              <p class="card-desc">El clásico relleno dulce tradicional con un toque de canela.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Temporada</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Murcianito Crema" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Crema</h3>
+              <p class="card-desc">Suave crema pastelera tostada con vainilla bourbon.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Murcianito Pistacho" class="card-image" style="filter: hue-rotate(-30deg);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Pistacho</h3>
+              <p class="card-desc">Relleno de praliné de pistacho verde y chocolate blanco.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-burgundy">Navidad</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Murcianito Turrón" class="card-image" style="filter: brightness(1.1);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito de Turrón</h3>
+              <p class="card-desc">Suave crema de turrón de Jijona con almendras tostadas.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img3825.webp" alt="Murcianito Lemon Pie" class="card-image" style="filter: contrast(1.2) saturate(1.5);">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Murcianito Lemon Pie</h3>
+              <p class="card-desc">Crema de limón ácida coronada con dulce merengue italiano.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-category theme-dark" id="packs" style="background-color: var(--surface-dark); scroll-margin-top: 80px;">
+      <div class="container">
+        <div class="category-header" data-reveal="fade-up">
+          <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Para Eventos y Reuniones</span>
+          <h2 style="color: var(--color-cream); margin: var(--space-sm) 0;">Para Compartir</h2>
+          <p style="font-family: var(--font-headline); font-style: italic; font-size: 1.25rem; color: var(--text-on-dark-muted); margin-top: var(--space-xs);">Nuestras cajas degustación</p>
+        </div>
+        <div class="products-grid" data-reveal="stagger">
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 3</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/pack3box.webp" alt="Pack Degustación" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "Degustación"</h3>
+              <p class="card-desc">Caja degustación de 3 unidades. Ideal para pequeñas reuniones.</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 6</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/pack6box.webp" alt="Pack La Cuadrilla" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "La Cuadrilla"</h3>
+              <p class="card-desc">Caja de 6 unidades con selección de sabores de autor (Trufado, Ibérico).</p>
+            </div>
+          </article>
+          <article class="card-product stagger-item">
+            <div class="card-badges"><span class="badge badge-gold">Pack de 12</span></div>
+            <div class="card-image-wrap">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/pack12box.webp" alt="Pack El Bando" class="card-image">
+              <div class="card-image-overlay"></div>
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">Pack "El Bando"</h3>
+              <p class="card-desc">Caja grande de 12 unidades variadas para grandes celebraciones.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eventos CTA -->
+    <section class="section" style="background-color: var(--color-burgundy); color: var(--color-white); text-align: center; padding: var(--space-5xl) var(--space-md);">
+      <div class="container" data-reveal="fade-up">
+        <span class="hero-label" style="color: var(--color-gold); font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">Celebraciones Especiales</span>
+        <h2 style="color: var(--color-white); margin: var(--space-md) 0; font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3rem);">Lleva Murcianitos a tu Evento</h2>
+        <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; max-width: 600px; margin: 0 auto var(--space-xl); line-height: 1.6;">Soluciones personalizadas para catering, bodas y regalos corporativos. Sorprende a tus invitados con un <em>corner exclusivo</em> de nuestro inconfundible hojaldre gourmet.</p>
+        <a href="./eventos.html" class="btn btn-primary" style="padding: 12px 32px; font-size: 1rem; background-color: var(--color-gold); color: var(--color-ink); border-color: var(--color-gold);">Descubrir Servicios</a>
+      </div>
+    </section>
+
+    <!-- Alérgenos -->
+    <section class="section" style="background-color: var(--color-cream); padding: var(--space-3xl) var(--space-md);">
+      <div class="container" data-reveal="fade-up">
+        <div style="background-color: #FFFFFF; border: 1px solid rgba(197, 160, 89, 0.3); border-radius: var(--space-md); padding: var(--space-2xl); text-align: center; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-md)';" onmouseout="this.style.transform='none'; this.style.boxShadow='var(--shadow-sm)';">
+          <span class="material-symbols-outlined" style="color: var(--color-gold); font-size: 2.5rem; margin-bottom: var(--space-sm);">info</span>
+          <h3 style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--color-ink); margin-bottom: var(--space-xs);">Información de Alérgenos</h3>
+          <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: var(--space-lg);">Todos nuestros productos de hojaldre contienen <strong>gluten (trigo)</strong>, <strong>huevo</strong> y <strong>lácteos</strong>, y son elaborados en un obrador donde pueden existir trazas de <strong>frutos secos</strong>.</p>
+          <a href="./alergenos.html" class="btn-link-fill">Consultar tabla completa</a>
+        </div>
+      </div>
+    </section>
+
+  
+</main>
+
+<?php get_footer(); ?>

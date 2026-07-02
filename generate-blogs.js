@@ -4,7 +4,7 @@ const articles = [
   { slug: "blog-secreto-hojaldre", title: "El secreto de nuestro hojaldre", date: "12 Mayo 2026", cat: "Historia", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1600&auto=format&fit=crop" },
   { slug: "blog-chato-murciano", title: "El auténtico chato murciano", date: "05 Abril 2026", cat: "Ingredientes", img: "https://images.unsplash.com/photo-1608889825103-eb5ed706fc64?q=80&w=1600&auto=format&fit=crop" },
   { slug: "blog-bando-huerta", title: "Murcianitos en Bando de la Huerta", date: "20 Marzo 2026", cat: "Eventos", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop" },
-  { slug: "blog-manteca-iberica", title: "La manteca ibérica perfecta", date: "15 Febrero 2026", cat: "Ingredientes", img: "./src/assets/IMG_3826.jpg" },
+  { slug: "blog-manteca-iberica", title: "La manteca ibérica perfecta", date: "15 Febrero 2026", cat: "Ingredientes", img: "./src/assets/img3826.webp" },
   { slug: "blog-origen-pastel", title: "El origen del pastel de carne", date: "10 Enero 2026", cat: "Historia", img: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=1600&auto=format&fit=crop" },
   { slug: "blog-maridaje", title: "El maridaje perfecto", date: "05 Diciembre 2025", cat: "Gastronomía", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=1600&auto=format&fit=crop" },
   { slug: "blog-ediciones-limitadas", title: "Ediciones Limitadas", date: "20 Noviembre 2025", cat: "Obrador", img: "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?q=80&w=1600&auto=format&fit=crop" },

@@ -617,5 +617,7 @@ export class AccessibilityWidget {
 
 // Global Init function to be called from main.js
 export function initAccessibilityWidget() {
-  window.accWidget = new AccessibilityWidget();
+  if (!document.getElementById('acc-widget-container')) {
+    window.accWidget = new AccessibilityWidget();
+  }
 }

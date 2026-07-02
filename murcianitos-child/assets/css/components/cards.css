@@ -1,0 +1,158 @@
+.card-product {
+  background-color: var(--surface-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-normal) var(--ease-smooth);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.theme-dark .card-product {
+  background-color: var(--color-ink-light);
+}
+
+.card-product:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-image-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 70%; /* Flatter rectangle for mobile */
+  background-color: var(--color-cream-dark);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .card-image-wrap {
+    padding-top: 100%; /* 1:1 Aspect Ratio on desktop */
+  }
+}
+
+.theme-dark .card-image-wrap {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-smooth);
+}
+
+/* For cutout images */
+.card-image.is-cutout {
+  object-fit: contain;
+  padding: var(--space-xl);
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+}
+
+.card-product:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-badges {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  z-index: 2;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--color-white);
+  color: var(--color-ink);
+  font-family: var(--font-label);
+  font-size: var(--text-label-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge-burgundy {
+  background-color: var(--color-burgundy);
+  color: var(--color-white);
+}
+
+.badge-gold {
+  background-color: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.card-content {
+  padding: 16px; /* Compact padding for mobile */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-family: var(--font-headline);
+  font-size: 1.25rem; /* Smaller title for mobile */
+  margin-bottom: 4px;
+  color: var(--color-ink);
+}
+
+.theme-dark .card-title {
+  color: var(--color-cream);
+}
+
+.card-desc {
+  font-size: 0.85rem; /* Smaller desc for mobile */
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  flex-grow: 1;
+  line-height: 1.4;
+}
+
+.theme-dark .card-desc {
+  color: var(--text-on-dark-muted);
+}
+
+@media (min-width: 768px) {
+  .card-content {
+    padding: var(--space-lg);
+  }
+  
+  .card-title {
+    font-size: var(--text-h3);
+    margin-bottom: var(--space-xs);
+  }
+  
+  .card-desc {
+    font-size: var(--text-body-sm);
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+  }
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.card-price {
+  font-family: var(--font-label);
+  font-size: var(--text-body-lg);
+  font-weight: 700;
+  color: var(--color-burgundy);
+}
+
+.theme-dark .card-price {
+  color: var(--color-gold);
+}
